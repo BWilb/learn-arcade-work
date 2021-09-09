@@ -3,7 +3,7 @@ import arcade
 I have drawn a snow man in the middle of winter, with a tree in the background,
 along with the sun. I have also included a title for my picture and a sign stating to be cautious on the ice
 I know that the drawing of the leaves remaining on the trees isn't realistic. 
-Each function's comment is below the exact function: just for clarification
+Each function's comment is below the exact function: just for clarification.
 """
 arcade.open_window(500, 500, "DRAWING EXAMPLE")
 
@@ -77,7 +77,7 @@ arcade.draw_lrtb_rectangle_filled(330, 360, 120, 35, (162, 162, 208))
 arcade.draw_lrtb_rectangle_filled(270, 420, 200, 120, (61, 12, 2))
 arcade.draw_text("Caution Slippery!", 280, 160, (227, 38, 54))
 
-arcade.draw_text("Frosty The Snowman", 175, 450, (240, 220, 130))
+arcade.draw_text("Frosty The Snowman.", 175, 450, (240, 220, 130))
 # This function draws the text--> Frost the Snowman
 arcade.finish_render()
 arcade.run()
