@@ -1,7 +1,8 @@
 import arcade
 """For lab 2
-I have drawn a snow man in the middle of winter, with a couple of trees in the background,
-along with the sun. I know that the drawing of the leaves remaining on the trees isn't realistic. 
+I have drawn a snow man in the middle of winter, with a tree in the background,
+along with the sun. I have also included a title for my picture and a sign stating to be cautious on the ice
+I know that the drawing of the leaves remaining on the trees isn't realistic. 
 Each function's comment is below the exact function: just for clarification
 """
 arcade.open_window(500, 500, "DRAWING EXAMPLE")
