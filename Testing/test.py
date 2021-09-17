@@ -1,17 +1,14 @@
-correct_num = 17
+def calculate_gdp(c, i , g, e, im):
+    gdp = c + i + g + (e - im)
+    return gdp
 
-print("""Hello...user, you wanna play a little game.
-I've come up with a random number, that you have to guess.
-If you do not guess the correct number after 10 tries you die!!!!""")
+def main():
+    consume = int(input("Mr. president, how much did your citizens spend this quarter?"))
+    invest = int(input("How much investment went into businesses?"))
+    government = int(input("how much did the government spend?"))
+    exports = int(input("how much did the united states export?"))
+    imports = int(input("what is the total amount of imports"))
 
-i = 0
-while(i < 10):
-    guessed_num = input("enter a number, this is your " + str(i + 1) + " try")
-    if(guessed_num < correct_num):
-        print("your number is too low, guess again")
-    elif(guessed_num > correct_num):
-        print("your number is too high, guess again")
-    elif(guessed_num == correct_num):
-        print("you guessed correctly")
-        break
-i += 1
+    calculate_gdp(consume, invest, government, exports, imports)
+    print(calculate_gdp(consume, invest, government, exports, imports))
+main()
