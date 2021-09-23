@@ -1,7 +1,7 @@
 import random
 
 def description():
-    """I wanted to make the main function a little shorter, so I
+    """I wanted to make my main function a little shorter, so I
     placed the game description in a different function"""
 
     print("Welcome to the ever so popular game of Camel!")
