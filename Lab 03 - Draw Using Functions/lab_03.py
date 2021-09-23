@@ -60,7 +60,7 @@ def draw_clouds():
     arcade.draw_arc_filled(425, 400, 150, 100, (242, 243, 244), 0, 180)
 
 def draw_sun():
-    """This function draws a sun, plus rays eminating from it"""
+    """This function draws a sun, plus rays emanating from it"""
     arcade.draw_circle_filled(250, 400, 25, (255, 126, 0))
     arcade.draw_line(250, 375, 250, 345, (255, 126, 0))
     arcade.draw_line(250, 425, 250, 455, (255, 126, 0))
