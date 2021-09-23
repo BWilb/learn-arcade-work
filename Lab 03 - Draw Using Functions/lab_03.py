@@ -9,7 +9,8 @@ def draw_concrete():
     arcade.draw_lrtb_rectangle_filled(0, 600, 200, 0, (110, 127, 128))
 
 def draw_building(x, y, w, h):
-    """This function draws each building of the city, the parameters take in values for adjusting center, height, and width
+    """This function draws each building of the city, the parameters take in values for adjusting center, height, and
+    width
     each building is designed so that they overlap with each other
     """
     arcade.draw_rectangle_filled(0 + x, 0 + y, 50 + w, 50 + h, (132, 132, 130))
