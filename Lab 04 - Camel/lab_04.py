@@ -13,7 +13,7 @@ def description():
 def main():
     """This is the main function
     I have my variables declared, then I call the game description
-    function"""
+    function. I have also created a couple unique random events besides finding an oasis"""
     miles_travelled = 0
     thirst = 0
     total_miles = 200
