@@ -54,15 +54,17 @@ def main():
 
         elif choice.lower() == "c":
             # this entire section of code for option c is for extreme speed
-            miles_travelled += random.randrange(10, 20)
+            miles_travelled += random.randrange(10, 21)
             camel_tired += random.randrange(1, 3)
             owner_miles += random.randrange(7, 14)
+            thirst += 1
 
         elif choice.lower() == "b":
             # This entire section of code is for moderate speed
             miles_travelled += random.randrange(5, 12)
             camel_tired += 1
             owner_miles += random.randrange(7, 14)
+            thirst += 1
 
         elif choice.lower() == "a":
             # This section of code is for drinking from canteen
@@ -73,38 +75,44 @@ def main():
             else:
                 print("You dont have any drinks left in your canteen! Good luck!")
 
-        print(f"You have travelled {miles_travelled} miles")
         if miles_travelled >= total_miles:
             print("You have escaped your consequences and won the game!")
-            break
-        thirst += 1
-        if thirst >= 6:
-            print("You have died of thirst. Goodbye")
             done = True
-        elif thirst >= 4:
-            print("You are a thirsty boy. Drink some water")
-        if camel_tired >= 8:
-            print("Your camel died and you lost the game")
-            done = True
-        elif camel_tired >= 5:
-            print("Your camel is getting tired. You better get some rest")
-        if owner_miles >= miles_travelled:
-            print("The natives have caught you")
-            done = True
-        elif owner_miles < miles_travelled:
-            if miles_travelled - owner_miles <= 15:
-                print("The owners are close behind you")
-        if miles_travelled % 20 == 1:
-            print("You have found an oasis")
-            camel_tired = 0
-            thirst = 0
-            canteen_drinks = 5
-        if miles_travelled % 50 == 1:
-            stole = random.randrange(1, 5)
-            canteen_drinks -= stole
-            print(f"A desert wanderer has stolen {stole} of your drinks")
-        if miles_travelled % 75 == 0:
-            print("Your camel has died due to stress and you've been captured")
-            done = True
+
+        if not done:
+            if thirst >= 6:
+                print("You have died of thirst. Goodbye")
+                done = True
+            elif thirst >= 4:
+                print("You are a thirsty boy. Drink some water")
+
+            if camel_tired >= 8:
+                print("Your camel died and you lost the game")
+                done = True
+            elif camel_tired >= 5:
+                print("Your camel is getting tired. You better get some rest")
+
+            if owner_miles >= miles_travelled:
+                print("The natives have caught you")
+                done = True
+            elif owner_miles < miles_travelled:
+                if miles_travelled - owner_miles <= 15:
+                    print("The owners are close behind you")
+
+        if not done:
+            if miles_travelled % 20 == 0:
+                print("You have found an oasis")
+                camel_tired = 0
+                thirst = 0
+                canteen_drinks = 5
+            if miles_travelled % 50 == 0:
+                stole = random.randrange(1, 5)
+                canteen_drinks -= stole
+                print(f"A desert wanderer has stolen {stole} of your drinks")
+            if miles_travelled % 75 == 0:
+                print("Your camel has died due to stress and you've been captured")
+                done = True
+            if not done:
+                print(f"You have travelled {miles_travelled} miles")
 
 main()
