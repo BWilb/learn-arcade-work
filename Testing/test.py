@@ -1,12 +1,10 @@
-def print_triangle(row):
-    for i in range(row):
-        print(" ", end=" ")
-        for j in range(row - i):
-            print(".", end=" ")
-        for j in range(0, i + 1):
-            print(j, end="  ")
-        for i in range(row, -1, -1):
-            print(j, end="  ")
-        print()
+class Dog():
+    def __init__(self, name):
+        self.name = ""
+        self.name = name
 
-print_triangle(3)
+def main():
+    my_dog = Dog("ruffy")
+    print(f"the dog's name is {my_dog.name}")
+
+main()
