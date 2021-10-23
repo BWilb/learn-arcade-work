@@ -13,7 +13,9 @@ class SnowMan:
         self.radius = radius
         self.color = color
         self.sound_three = arcade.load_sound("wind5.wav")
+        """Importing sound three into snowman object"""
     def draw(self):
+        """draws snowman. Each circle created after first circle is a downsized version"""
         arcade.draw_circle_filled(self.position_x,
                                   self.position_y,
                                   self.radius,
@@ -41,37 +43,50 @@ class SnowMan:
             self.position_x = self.radius
             print("you have reached the edge of the screen")
             arcade.play_sound(self.sound_three)
+
         if self.position_x > SCREEN_WIDTH - self.radius:
             self.position_x = SCREEN_WIDTH - self.radius
             print("you have reached the edge of the screen")
             arcade.play_sound(self.sound_three)
+
         if self.position_y < self.radius:
             self.position_y = self.radius
             print("you have reached the edge of the screen")
             arcade.play_sound(self.sound_three)
+
         if self.position_y > SCREEN_HEIGHT - self.radius:
             self.position_y = SCREEN_HEIGHT - self.radius - 125
+            """Improvisation of what we did in class. Except I had to base the top of the snowman, off of the 
+            head.
+            """
             print("you have reached the edge of the screen")
             arcade.play_sound(self.sound_three)
 
 
     def snow_change(self):
+        """changes snowman color to aquamarine"""
         self.color = arcade.csscolor.AQUAMARINE
     def change_again(self):
+        """changes snowman color turquoise"""
         self.color = arcade.csscolor.TURQUOISE
     def reset_color(self):
+        """resets the snowman's color back to white"""
         self.color = arcade.csscolor.WHITE
+
 class Ground:
     def __init__(self):
         self.color = arcade.csscolor.GREEN
 
     def draw_ground(self):
+        """Draws the Ground"""
         arcade.draw_rectangle_filled(0, 0, SCREEN_HEIGHT + 1000, SCREEN_WIDTH, self.color)
 
     def change_color(self):
+        """Changes ground's color, based on left mouse click"""
         self.color = arcade.csscolor.LIGHT_GREEN
 
     def change_color_again(self):
+        """Changes ground's color, based on right mouse click"""
         self.color = arcade.csscolor.FOREST_GREEN
 
 class MyGame(arcade.Window):
@@ -86,9 +101,17 @@ class MyGame(arcade.Window):
         arcade.set_background_color(arcade.csscolor.SKY_BLUE)
         self.sound = arcade.load_sound("gully.wav")
         self.sound_two = arcade.load_sound("gmae.wav")
+        """creating two other sound variables"""
 
         self.snowman = SnowMan(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, 100, arcade.csscolor.WHITE)
         self.myGround = Ground()
+
+        self.set_mouse_visible(False)
+
+    def on_draw(self):
+        arcade.start_render()
+        self.myGround.draw_ground()
+        self.snowman.draw()
     def update(self, delta_time: float):
         self.snowman.update()
 
@@ -102,24 +125,19 @@ class MyGame(arcade.Window):
     def on_key_press(self, key: int, modifiers: int):
         if(key == arcade.key.T):
             self.snowman.change_again()
-            print("You set the snowman's color to aquamarine")
+            print("You set the snowman's color to turquoise")
         elif(key == arcade.key.A):
             self.snowman.snow_change()
             print("You set the snowman's color to aquamarine")
         elif(key == arcade.key.R):
             self.snowman.reset_color()
             print("You reset the snowman's color to white")
-        elif(key == arcade.key.SPACE):
-            arcade.play_sound(self.sound)
         else:
             print("command wasn't read correctly")
+
     def on_mouse_motion(self, x: float, y: float, dx: float, dy: float):
         self.snowman.position_y = y
         self.snowman.position_x = x
-    def on_draw(self):
-        arcade.start_render()
-        self.myGround.draw_ground()
-        self.snowman.draw()
 
 
 def main():
