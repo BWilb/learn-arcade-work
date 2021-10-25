@@ -52,7 +52,7 @@ class SnowMan:
             arcade.play_sound(self.sound_three)
             print("you have gone past the edge of the screen")
 
-        if self.position_y > SCREEN_HEIGHT :
+        if self.position_y > SCREEN_HEIGHT - self.radius:
             print("you have gone past the edge of the screen")
             arcade.play_sound(self.sound_three)
 
