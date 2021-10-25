@@ -13,7 +13,7 @@ class SnowMan:
         self.position_y = position_y
         self.radius = radius
         self.color = color
-        self.sound_three = arcade.load_sound("wind5.wav")
+        self.sound_three = arcade.load_sound("../Lab 07 - User Control/wind5.wav")
         """Importing sound three into snowman object"""
     def draw(self):
         """draws snowman. Each circle created after first circle is a downsized version"""
@@ -52,7 +52,10 @@ class SnowMan:
             arcade.play_sound(self.sound_three)
             print("you have gone past the edge of the screen")
 
-        if self.position_y > SCREEN_HEIGHT :
+        if self.position_y > SCREEN_HEIGHT - 200:
+            """Improvisation of what we did in class. Except I had to base the top of the snowman, off of the 
+            head.
+            """
             print("you have gone past the edge of the screen")
             arcade.play_sound(self.sound_three)
 
@@ -68,7 +71,6 @@ class SnowMan:
         self.color = arcade.csscolor.WHITE
 
 class CrescentSun:
-    """Creation of a crescent sun"""
     def __init__(self, c_x, c_y, change_x, change_y, width, height, color, s_a, e_a):
         self.center_x = c_x
         self.center_y = c_y
@@ -89,7 +91,7 @@ class CrescentSun:
                                self.start_angle,
                                self.end_angle)
     def update(self):
-        """updating method for crescent sun"""
+
         self.center_y += self.change_y
         self.center_x += self.change_x
 
@@ -107,7 +109,6 @@ class CrescentSun:
             print("you have moved off the screen")
 
     def rotate(self):
-        """Rotation method for sun, click C"""
         self.start_angle += 45
         self.end_angle += 45
 
@@ -137,8 +138,8 @@ class MyGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Lab 7 - User Control")
 
         arcade.set_background_color(arcade.csscolor.SKY_BLUE)
-        self.sound = arcade.load_sound("gully.wav")
-        self.sound_two = arcade.load_sound("gmae.wav")
+        self.sound = arcade.load_sound("../Lab 07 - User Control/gully.wav")
+        self.sound_two = arcade.load_sound("../Lab 07 - User Control/gmae.wav")
         """creating two other sound variables"""
 
         self.sun = CrescentSun(SCREEN_WIDTH / 1.25, SCREEN_HEIGHT / 1.5, 0, 0, 50, 100, arcade.csscolor.GOLD, 90, 270)
