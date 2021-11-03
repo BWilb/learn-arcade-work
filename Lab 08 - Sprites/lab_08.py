@@ -9,7 +9,9 @@ KENOBI_SPEED = int(input("How fast would you like Obi Wan Kenobi to move?: "))
 BLASTER_COUNT = 50
 SABER_COUNT = 50
 SOUND_ONE = arcade.load_sound("laser4.wav")
+"""Good sound"""
 SOUND_TWO = arcade.load_sound("laser13.wav")
+"""Bad sound"""
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
@@ -106,7 +108,8 @@ class MyGame(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Vader vs Kenobi")
         """Creation of my sprite objects"""
         self.sprite_list = None
-        self.objects_list = None
+        self.blaster_list = None
+        self.saber_list = None
 
         self.kenobi_sprite = None
         self.kenobi_score = None
@@ -119,7 +122,8 @@ class MyGame(arcade.Window):
     def setup(self):
 
         self.sprite_list = arcade.SpriteList()
-        self.objects_list = arcade.SpriteList()
+        self.blaster_list = arcade.SpriteList()
+        self.saber_list = arcade.SpriteList()
 
         self.kenobi_score = 0
         self.kenobi_sprite = KenobiSprite("kenobi.png", KENOBI_SCALING)
@@ -138,30 +142,33 @@ class MyGame(arcade.Window):
         self.sprite_list.append(self.vader_sprite)
 
         for i in range(BLASTER_COUNT):
+            """Blaster is the bad sprite"""
             blaster = Blaster("blaster.png", BLASTER_SCALING)
             """Cite: Star Wars Battlefront Wiki: Blaster Pistol. https://battlefront.fandom.com/wiki/Blaster_Pistol."""
             blaster.center_x = random.randrange(SCREEN_WIDTH)
             blaster.center_y = random.randrange(SCREEN_HEIGHT)
-            self.objects_list.append(blaster)
+            self.blaster_list.append(blaster)
         for j in range(SABER_COUNT):
+            """Light saber is the good sprite"""
             saber = Saber("dual_saber.png", SABER_SCALING)
             """Cite: Adaptive Saber Parts Lightsaber. https://www.pinterest.com/pin/235594624235964960/"""
             saber.center_x = random.randrange(SCREEN_WIDTH)
             saber.center_y = random.randrange(SCREEN_HEIGHT)
-            self.objects_list.append(saber)
+            self.saber_list.append(saber)
 
     def on_draw(self):
         arcade.start_render()
-        if len(self.objects_list) != 0:
-            self.objects_list.draw()
+        if len(self.saber_list) != 0 and len(self.blaster_list) != 0:
+            self.blaster_list.draw()
+            self.saber_list.draw()
             self.sprite_list.draw()
         else:
             if self.kenobi_score > self.vader_score:
-                arcade.draw_text("General Kenobi has won", 500, 400, arcade.csscolor.WHITE, 20)
+                arcade.draw_text("Game Over: General Kenobi has won", 500, 400, arcade.csscolor.WHITE, 20)
                 """Kenobi is the good sprite"""
                 arcade.finish_render()
             elif self.vader_score > self.kenobi_score:
-                arcade.draw_text("Darth Vader has won", 500, 400, arcade.csscolor.WHITE, 20)
+                arcade.draw_text("Game Over: Darth Vader has won", 500, 400, arcade.csscolor.WHITE, 20)
                 """Darth Vader is the bad sprite"""
                 arcade.finish_render()
 
@@ -191,32 +198,47 @@ class MyGame(arcade.Window):
 
 
     def update(self, delta_time):
-        if self.kenobi_score > -10:
+        if len(self.saber_list) != 0:
             self.kenobi_sprite.update()
             self.vader_sprite.update()
-            self.objects_list.update()
-            """checks to see if kenobi's score is above -10"""
+            self.saber_list.update()
+            self.blaster_list.update()
+            """checks to see if saber list is empty or not"""
 
 
         sprite_hit_list = arcade.check_for_collision(self.kenobi_sprite, self.vader_sprite)
-        kenobi_hit_list = arcade.check_for_collision_with_list(self.kenobi_sprite, self.objects_list)
-        vader_hit_list = arcade.check_for_collision_with_list(self.vader_sprite, self.objects_list)
+        kenobi_hit_list = arcade.check_for_collision_with_list(self.kenobi_sprite, self.saber_list)
+        vader_hit_list = arcade.check_for_collision_with_list(self.vader_sprite, self.saber_list)
+        kenobi_second_hit_list = arcade.check_for_collision_with_list(self.kenobi_sprite, self.blaster_list)
+        vader_second_hit_list = arcade.check_for_collision_with_list(self.vader_sprite, self.blaster_list)
 
         if sprite_hit_list:
             self.vader_score -= 3
             self.kenobi_score -= 2
 
         for object1 in kenobi_hit_list:
+            """Kenobi collision with good sprite"""
             object1.remove_from_sprite_lists()
             arcade.play_sound(SOUND_ONE)
-            self.vader_score -= 1
             self.kenobi_score += 2
 
         for object2 in vader_hit_list:
+            """Vader collision with good sprite"""
             object2.remove_from_sprite_lists()
+            arcade.play_sound(SOUND_ONE)
+            self.vader_score += 2
+
+        for object3 in kenobi_second_hit_list:
+            """Kenobi collision with bad sprite"""
+            object3.remove_from_sprite_lists()
             arcade.play_sound(SOUND_TWO)
             self.kenobi_score -= 1
-            self.vader_score += 2
+
+        for object4 in vader_second_hit_list:
+            """Vader collision with bad sprite"""
+            object4.remove_from_sprite_lists()
+            arcade.play_sound(SOUND_TWO)
+            self.vader_score -= 1
 
 def main():
     my_window = MyGame()
