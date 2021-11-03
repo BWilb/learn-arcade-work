@@ -158,11 +158,21 @@ class MyGame(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
-        if len(self.saber_list) != 0 and len(self.blaster_list) != 0:
+        if len(self.saber_list) != 0:
             self.blaster_list.draw()
             self.saber_list.draw()
             self.sprite_list.draw()
-        else:
+        elif len(self.saber_list) == 0:
+            if self.kenobi_score > self.vader_score:
+                arcade.draw_text("Game Over: General Kenobi has won", 500, 400, arcade.csscolor.WHITE, 20)
+                """Kenobi is the good sprite"""
+                arcade.finish_render()
+            elif self.vader_score > self.kenobi_score:
+                arcade.draw_text("Game Over: Darth Vader has won", 500, 400, arcade.csscolor.WHITE, 20)
+                """Darth Vader is the bad sprite"""
+                arcade.finish_render()
+
+        elif len(self.saber_list) == 0 and len(self.blaster_list) == 0:
             if self.kenobi_score > self.vader_score:
                 arcade.draw_text("Game Over: General Kenobi has won", 500, 400, arcade.csscolor.WHITE, 20)
                 """Kenobi is the good sprite"""
