@@ -326,6 +326,10 @@ class MyGame(arcade.Window):
                                                              self.rooms[self.current_room].wall_list)
             self.character.center_x = 400
             self.character.center_y = 0
+        if self.character.center_x > SCREEN_WIDTH and self.current_room == 1:
+            self.character.center_x = SCREEN_WIDTH
+        if self.character.center_y > SCREEN_HEIGHT and self.current_room == 1:
+            self.character.center_y = SCREEN_HEIGHT
 
     def on_key_press(self, key: int, modifiers: int):
         if key == arcade.key.UP:
