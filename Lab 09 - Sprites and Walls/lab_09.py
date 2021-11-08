@@ -25,6 +25,7 @@ def create_roomone():
     room = Room()
     room.wall_list = arcade.SpriteList()
     room.coin_list = arcade.SpriteList()
+
     wall_coordinates = [[200, 400],
                         [232, 400],
                         [264, 400],
@@ -275,13 +276,17 @@ class MyGame(arcade.Window):
             arcade.draw_lrwh_rectangle_textured(0, 0,
                                                 SCREEN_WIDTH, SCREEN_HEIGHT, self.rooms[self.current_room].background)
             self.rooms[self.current_room].wall_list.draw()
+
             if self.current_room == 0:
                 self.rooms[self.current_room].coin_list.draw()
+
             elif self.current_room == 1:
                 self.rooms[self.current_room].coin_list.draw()
+
             elif self.current_room == 2:
                 self.rooms[self.current_room].coin_list.draw()
             self.character.draw()
+
         elif self.character_hit == (DIAMOND_COUNT + SILVER_COINS):
             arcade.draw_text("Game Over: No more objects left!", 400, 400, arcade.csscolor.WHITE)
             arcade.finish_render()
@@ -326,18 +331,23 @@ class MyGame(arcade.Window):
                                                              self.rooms[self.current_room].wall_list)
             self.character.center_x = 400
             self.character.center_y = 0
+
         if self.character.center_x > SCREEN_WIDTH and self.current_room == 1:
             self.character.center_x = SCREEN_WIDTH
+
         if self.character.center_y > SCREEN_HEIGHT and self.current_room == 1:
             self.character.center_y = SCREEN_HEIGHT
 
     def on_key_press(self, key: int, modifiers: int):
         if key == arcade.key.UP:
             self.character.change_y = MOVEMENT_SPEED
+
         elif key == arcade.key.DOWN:
             self.character.change_y = -MOVEMENT_SPEED
+
         elif key == arcade.key.RIGHT:
             self.character.change_x = MOVEMENT_SPEED
+
         elif key == arcade.key.LEFT:
             self.character.change_x = -MOVEMENT_SPEED
 
