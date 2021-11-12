@@ -15,7 +15,7 @@ def main():
 
     print("----Linear Search----")
     alice_file = open("AliceInWonderLand200.txt")
-    for story_line in alice_file:
+    for index, story_line in enumerate(alice_file):
         word_list = split_line(story_line)
         for word in word_list:
             key = word.upper()
@@ -23,13 +23,14 @@ def main():
             while current_pos < len(dictionary_list) and dictionary_list[current_pos] != key:
                 current_pos += 1
                 if current_pos == len(dictionary_list):
-                    print(f"Line{current_pos} possible misspelled word: " + key)
+                    print(f"Line {index + 1} possible misspelled word: " + key)
+
     alice_file.close()
 
     print()
     print("----Binary Search----")
     alice_file = open("AliceInWonderLand200.txt")
-    for story_line in alice_file:
+    for index, story_line in enumerate(alice_file):
         word_list = split_line(story_line)
         for word in word_list:
             key = word.upper()
@@ -46,6 +47,7 @@ def main():
                 else:
                     found = True
             if not found:
-                print(f"Line{middle_position} possible misspelled word: " + key)
+                print(f"Line {index + 1} possible misspelled word: " + key)
+
     alice_file.close()
 main()

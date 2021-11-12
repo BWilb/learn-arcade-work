@@ -1,5 +1,5 @@
 import arcade
-
+import random
 WIDTH = 60
 HEIGHT = 60
 MARGIN = 5
@@ -20,12 +20,16 @@ class MyGame(arcade.Window):
         self.color = arcade.csscolor.GREEN
 
         arcade.set_background_color(arcade.color.BLACK)
+
+        """Creation of grid of numbers"""
         self.grid = []
         for row in range(ROW_COUNT):
             self.grid.append([])
             for column in range(COLUMN_COUNT):
                 self.grid[row].append(0)
-
+        self.grid[1][1] = 1
+        self.grid[0][2] = 1
+        self.grid[0][3] = 1
 
     def on_draw(self):
         """
@@ -33,18 +37,16 @@ class MyGame(arcade.Window):
         """
 
         arcade.start_render()
-        self.grid[0][1] = 1
         for row in range(ROW_COUNT):
             for column in range(COLUMN_COUNT):
-                if (self.grid[row][column] == 1):
-                    x = MARGIN + WIDTH / 2 + column * (WIDTH + MARGIN)
-                    y = MARGIN + HEIGHT / 2 + row * (HEIGHT + MARGIN)
-                    arcade.draw_rectangle_filled(x, y, WIDTH, HEIGHT, self.color)
+                x = MARGIN + WIDTH / 2 + column * (WIDTH + MARGIN)
+                y = MARGIN + HEIGHT / 2 + row * (HEIGHT + MARGIN)
+                if self.grid[row][column] == 0:
+                    self.color = (random.randrange(256),
+                                  random.randrange(256))
                 else:
-                    x = MARGIN + WIDTH / 2 + column * (WIDTH + MARGIN)
-                    y = MARGIN + HEIGHT / 2 + row * (HEIGHT + MARGIN)
-                    arcade.draw_rectangle_filled(x, y, WIDTH, HEIGHT, arcade.csscolor.WHITE)
-
+                    self.color = arcade.csscolor.GREEN
+                arcade.draw_rectangle_filled(x, y, WIDTH, HEIGHT, self.color)
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         """
@@ -55,7 +57,14 @@ class MyGame(arcade.Window):
             row = y // (HEIGHT + MARGIN)
 
             print(f"Click coordinates: ({x}, {y}). Grid coordinates: ({row}, {column})")
-        pass
+
+        if row < ROW_COUNT and column < COLUMN_COUNT:
+            if self.grid[row][column] == 0:
+                self.grid[row][column] = 1
+            else:
+                self.grid[row][column] = 0
+
+
 
 
 def main():
