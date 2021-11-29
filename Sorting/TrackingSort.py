@@ -25,6 +25,7 @@ def selection_sort(my_list):
         my_list[min_pos] = my_list[cur_pos]
         my_list[cur_pos] = temp
     print(selection_counter)
+    """Print statement for selection counter"""
 
 
 def insertion_sort(my_list):
@@ -52,15 +53,13 @@ def insertion_sort(my_list):
         # the key into the correct location
         my_list[scan_pos + 1] = key_value
     print(insert_counter)
+    """Print statement for insertion counter"""
 
 
 # This will point out a list
 # For more information on the print formatting {:3}
 # see the chapter on print formatting.
-def print_list(my_list):
-    for item in my_list:
-        print(f"{item:3}", end="")
-    print()
+
 
 
 def main():
@@ -74,18 +73,16 @@ def main():
         list_for_insertion_sort.append(new_number)
 
     # Print the original list
-    print("Original List")
-    print_list(list_for_selection_sort)
 
     # Use the selection sort and print the result
     print("Selection Sort")
     selection_sort(list_for_selection_sort)
-    print_list(list_for_selection_sort)
+
 
     # Use the insertion sort and print the result
     print("Insertion Sort")
     insertion_sort(list_for_insertion_sort)
-    print_list(list_for_insertion_sort)
+
 
 
 main()
