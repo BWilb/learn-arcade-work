@@ -1,0 +1,162 @@
+1. Write code to swap the values 25 and 40.
+
+my_list = [55, 41, 52, 68, 45, 27, 40, 25, 37, 26]
+
+1.1. list_val = my_list[7]
+1.2. my_list[7] = my_list[6]
+1.3. my_list[6] = list_val
+
+2. Write code to swap the values 2 and 27.
+
+my_list = [27, 32, 18,  2, 11, 57, 14, 38, 19, 91]
+
+2.1. list_val = my_list[3]
+2.2. my_list[3] = my_list[0]
+2.3. my_list[0] = list_val
+
+
+3. Why does the following code not work? Explain it, don't just list working code.
+
+my_list = [70, 32, 98, 88, 92, 36, 81, 83, 87, 66]
+temp = my_list[0]
+my_list[1] = my_list[0]
+my_list[0] = temp
+
+3.1. The temp variable is currently storing the value in the first index of the list. However once the first index number
+has been stored in the second spot of the list, it is reassigned to the first spot. Which permanently erases the original
+number in the first index position.
+
+4. Show how the following numbers can be sorted using the selection sort. Show the numbers after each iteration of the outer loop, similar to what is shown in the book. I am NOT looking for a copy of the code to do the sort. If you include any code for problems 4-7 you are doing it wrong.
+
+97   74    8   98   47   62   12   11    0   60
+
+    4.1 The 0 is extracted and inserted into the first index_pos. 97 is shifted to 0's previous location
+        0 74 8 98 47 62 12 11 97 60
+
+    4.2 The 8 is extracted and shifted to second index_pos and 74 is shifted to 8's previous location
+        0 8 74 98 47 62 12 11 97 60
+
+    4.3 The 11 is extracted and takes 74's index_pos while 74 takes 11's past position
+        0 8 11 98 47 62 12 74 97 60
+
+    4.4 The 12 is extracted and takes 98's index_pos while 98 takes 12's previous location
+        0 8 11 12 47 62 98 74 97 60
+
+    4.5 47 is extracted but doesn't move
+        0 8 11 12 47 62 98 74 97 60
+
+    4.6 The 60 is extracted and swaps spots with 62
+        0 8 11 12 47 60 98 74 97 62
+
+    4.7 The 62 swaps spots with 98 --> end
+        0 8 11 12 47 60 62 74 97 98
+
+
+5. Show how the following numbers can be sorted using the selection sort:
+
+74   92   18   47   40   58    0   36   29   25
+
+    5.1 The 0 swaps index values with 74
+        0 92 18 47 40 58 74 36 29 25
+
+    5.2 The 92 and 25 swap indices
+        0 18 25 47 40 58 74 36 29 92
+
+    5.3 The 47 and 29 swap indices
+        0 18 25 29 40 58 74 36 47 92
+
+    5.4 The 40 and 36 swap indices
+        0 18 25 29 36 58 74 40 47 92
+
+    5.5 The 58 and 40 swap indices
+        0 18 25 29 36 40 74 58 47 92
+
+    5.6 The 74 and 47 swap indices ---> end of sort
+        0 18 25 29 36 40 47 58 74 92
+
+6. Show how the following numbers can be sorted using the INSERTION sort. (Note: If you think the 0 gets immediately sorted into position, you are doing it wrong. Go back and re-read how this sort works.)
+
+74   92   18   47   40   58    0   36   29   25
+
+    6.1 The 18 is extracted and moved to first position
+        18 74 92 47 40 58 0 36 29 25
+
+    6.2 The 47 is extracted and moved to second index position
+        18 47 74 92 40 58 0 36 29 25
+
+    6.3 The 40 is extracted and moved to second position index
+        18 40 47 74 92 58 0 36 29 25
+
+    6.4 The 58 is extracted and moved to fourth position
+        18 40 47 58 74 92 0 36 29 25
+
+    6.5 The 0 is extracted and moved to first position
+        0 18 40 47 58 74 92 36 29 25
+
+    6.6 The 36 is extracted adn moved to third position
+        0 18 36 40 47 58 74 92 29 25
+
+    6.7 The 29 is extracted and moved to third position
+        0 18 29 36 40 47 58 74 92 25
+
+    6.8 The 25 is extracted and moved to third position
+        0 18 25 29 36 40 47 58 74 92
+
+    6.9/6.10 both 74 and 92 are extracted but stay in current position
+        0 18 25 29 36 40 47 58 74 92
+
+7. Show how the following numbers can be sorted using the insertion sort:
+
+    37   11   14   50   24    7   17   88   99    9
+
+    7.1 The 11 is extracted and shifted to position one
+        11 37 14 50 24 7 17 88 99 9
+
+    7.2 The 14 is extracted and shifted to position two
+        11 14 37 50 24 7 17 88 99 9
+
+    7.3 The 24 is extracted and shifted to position three
+        11 14 24 37 50 7 17 88 99 9
+
+    7.4 The 7 is extracted and shifted to position one
+        7 11 14 24 37 50 17 88 99 9
+
+    7.5 The 17 is extracted and shifted to position four
+        7 11 14 17 24 37 50 88 99 9
+
+    7.6 The 9 is extracted and shifted to position two
+        7 9 11 14 17 24 37 50 88 99
+
+
+8. Explain what `min_pos` does in the selection sort.
+    The min_pos keeps track of the location of the smallest number. If a smaller number is found later on down the line
+    in the second loop, then the min_pos becomes the current scan_pos that the next inner loop will use. Also, if there
+    is a smaller value found in the min_pos, then the value will be stored in a temporary variable and shifted to the index
+    that will store the new smaller variable.
+
+9. Explain what `cur_pos` does in the selection sort.
+    The cur_pos acts as the doorkeeper to the outside for loop. It controls which index the for loop is currently acting on.
+    if a smaller value is found at a different index, then the smaller value will swap indices with the larger value.
+    The smaller value will be what cur_pos is.
+
+10. Explain what `scan_pos` does in the selection sort.
+    The scan_pos operates as a scanner for the current index value. If a value is found that is smaller than the current
+    index value, then the current scan_pos becomes the min_pos.
+
+
+11. Explain what `key_pos` and `key_value` are in the insertion sort.
+    - The key_pos acts as a boundary between a list's unsorted and sorted values.
+    - The key_value is the value that is found to be smaller than the value that is being used as a stake to scan the rest
+    of the list. The key_value then becomes the current stake, until a smaller value is found.
+
+12. Explain `scan_pos` in the insertion sort.
+    scan_pos acts like finder variable. If the scanner finds value that the curren scan_pos is smaller than, then that
+    scan_pos gets inserted to the bigger value's index and the bigger index is pushed down the list. However the values dont
+    swap indices
+
+13. Look at the example sort program at the very end of this chapter:
+
+    - The inside for loop of the Selection sort totalled 4950
+    - The inside for loop of the Insertion sort totalled 2410
+
+https://learn.arcade.academy/en/latest/chapters/30_sorting/sorting.html

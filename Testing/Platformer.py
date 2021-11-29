@@ -4,7 +4,7 @@ import arcade
 SPRITE_SCALING = 0.5
 TILE_SCALING = 0.5
 GRID_PIXEL_SIZE = 128
-GRAVITY = 10
+GRAVITY = 1
 
 DEFAULT_SCREEN_WIDTH = 800
 DEFAULT_SCREEN_HEIGHT = 600
@@ -15,11 +15,11 @@ SCREEN_TITLE = "Sprite Move with Scrolling Screen Example"
 VIEWPORT_MARGIN = 220
 
 # How fast the camera pans to the player. 1.0 is instant.
-CAMERA_SPEED = 0.1
+CAMERA_SPEED = 1
 
 # How fast the character moves
-PLAYER_MOVEMENT_SPEED = 7
-JUMP_SPEED = 10
+PLAYER_MOVEMENT_SPEED = 5
+JUMP_SPEED = 5
 
 
 class MyGame(arcade.Window):
@@ -54,7 +54,7 @@ class MyGame(arcade.Window):
         self.wall_list = arcade.SpriteList()
 
         # Set up the player
-        self.player_sprite = arcade.Sprite("character.png",
+        self.player_sprite = arcade.Sprite("../Lab 12 - Final Lab/character.png",
                                            scale=0.4)
         self.player_sprite.center_x = 256
         self.player_sprite.center_y = 512

@@ -249,7 +249,7 @@ class MyGame(arcade.Window):
         """setup of game"""
         self.player_list = arcade.SpriteList()
 
-        self.character = arcade.Sprite("character.png", SPRITE_SCALING)
+        self.character = arcade.Sprite("../Lab 12 - Final Lab/character.png", SPRITE_SCALING)
         self.character.center_x = 40
         self.character.center_y = 40
         self.character_score = 0

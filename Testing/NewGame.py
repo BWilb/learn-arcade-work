@@ -24,7 +24,7 @@ class HistoryGame(arcade.Window):
         self.scene.add_sprite_list("Characters")
         self.scene.add_sprite_list("Walls", use_spatial_hash=True)
 
-        self.character = arcade.Sprite("character.png", SCALING)
+        self.character = arcade.Sprite("../Lab 12 - Final Lab/character.png", SCALING)
         self.character.center_x = random.randrange(SCREEN_WIDTH)
         self.character.center_y = random.randrange(SCREEN_HEIGHT)
         self.scene.add_sprite("Characters", self.character)
