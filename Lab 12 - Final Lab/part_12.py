@@ -6,12 +6,19 @@ SCREEN_HEIGHT = 600
 SPRITE_SCALING = 0.5
 CAMERA_SPEED = 0.45
 MOVEMENT_SPEED = int(input("User how fast would you like your character to move?: "))
-GRAVITY = 0.30
+GRAVITY = 0.25
 COIN_COUNT = 100
 
 class Coin(arcade.Sprite):
     def __int__(self, file_name, coin_scaling):
         super().__init__(file_name, coin_scaling)
+        self.center_y = None
+        self.center_x = None
+
+class Room():
+    def __init__(self):
+        self.background = None
+        self.object_list = None
 
 class MyGame(arcade.Window):
     def __init__(self):
@@ -31,7 +38,8 @@ class MyGame(arcade.Window):
         self.game_scene.add_sprite_list("Characters", use_spatial_hash=True)
         self.character.setup(self)
 
-        map = "FinalProject.json"
+        """map = "FinalProject.json"
+        """"""Setting up Tiled map""""""
 
         self.tile_map = arcade.load_tilemap(map, scaling=SPRITE_SCALING)
         self.wall_list = self.tile_map.sprite_lists["Walls"]
@@ -40,12 +48,23 @@ class MyGame(arcade.Window):
             self.character,
             self.wall_list,
             gravity_constant=GRAVITY
+        )"""
+        """Creation of gravity"""
+
+        """map = "FinalProject.json"
+        self.tile_map = arcade.load_tilemap(map, scaling=SPRITE_SCALING)
+        self.wall_list = self.tile_map.sprite_lists["Walls"]"""
+
+        self.physics_engine = arcade.PhysicsEnginePlatformer(
+            self.character,
+            self.wall_list,
+            gravity_constant=GRAVITY
         )
 
-        if self.tile_map.background_color:
+        """if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
         else:
-            arcade.set_background_color(arcade.color.GOLD)
+            arcade.set_background_color(arcade.color.GOLD)"""
 
     def on_draw(self):
         arcade.start_render()
@@ -54,15 +73,16 @@ class MyGame(arcade.Window):
         self.character.draw()
         self.camera_gui.use()
 
-        arcade.draw_rectangle_filled(self.width // 2,
+        """arcade.draw_rectangle_filled(self.width // 2,
                                      20,
                                      self.width,
                                      40,
                                      arcade.color.ALMOND)
         text = f"Scroll value: ({self.character_camera.position[0]:5.1f}, " \
                f"{self.character_camera.position[1]:5.1f})"
+        
 
-        arcade.draw_text(text, 10, 10, arcade.color.BLACK_LEATHER_JACKET, 20)
+        arcade.draw_text(text, 10, 10, arcade.color.BLACK_LEATHER_JACKET, 20)"""
 
     def on_key_press(self, key: int, modifiers: int):
         if key == arcade.key.RIGHT:

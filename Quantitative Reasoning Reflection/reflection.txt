@@ -1,0 +1,137 @@
+Bryce Wilbur
+
+December 1, 2021
+
+                              Quantitative Reasoning Reflection
+1.
+    There are specific instances in a program where you can use different
+methods of reasoning. For example if there are two possible future paths that could
+be taken, an if statement will be used. For example, a user inputs two numbers into
+your program. Based on your logic, if the first number inputted is larger than the
+second number, your program will print "hi". If the other number is bigger
+then, your program will output "Bye".
+
+1. if num_one > num_two:
+    print("hi")
+elif num_two > num_one:
+    print("Bye")
+
+Loops are also another option. If you have a set number of times you will be
+looping, then you will use a for loop. If the loop depends upon user actions or
+a true/false decision, then a while loop will be used. If you know you are going
+to be using a group of similar values, such as strings or integers; then you
+can use a list.
+- my_list = []
+  for i in range(10):
+      my_list.append("hi")
+A couple ways that I improve the functionality of my programs is I use classes,
+objects, and functions. With these three pieces of functionality, you can group
+together chunks of code.
+    - 2. classes
+        class My_Class:
+            def __init__()
+            def deposit()
+    - 3. objects
+        my_class = My_Class()
+    - 4. functions
+        def deposit(dep):
+            total_amt += dep
+
+2.
+    The best way I can think of explaining my solution to someone else is through
+comments, function names, variable names. With comments, you can explain what
+your function or code is supposed to do. You can also explain to your co-workers
+or users of code, what the code does through version control comments. These comments
+could either be one word or a descriptive statement to discern what you did.
+- 1. with a single comment
+    def withdraw(with):
+    #This function withdraws a specific amount from total_amt.
+
+- 2. with a multi comment
+    def withdraw(with):
+    """
+    This function withdraws a specific amount from total_amt.
+    However it has not been finished yet
+    """
+
+- 3. proper variable names
+    3.1. student_names = [] --> list of student names
+    3.2. total_amt = 0 --> variable for storing integers
+    3.3. my_name = "Bryce" --> variable for storing strings
+
+- 4. proper function names with proper variable names
+    4.1. def withdraw(withdrwl):
+    4.2. def deposit(dep):
+
+- 5. Version control comments
+    5.1. added a student_list on line 30
+    5.2  fixed the computation of the function calculating GDP on line 68
+
+3.
+    I enjoy breaking up my code in order to test it out. I enjoy creating
+simple banking programs in Java, however I haven't done created any in
+Python yet. I usually test out my deposit function first, then my withdrawal
+function, and then my future interest function.
+    -1. def deposit(dep):
+            total_amt += dep
+            return total_amt
+
+    -2. def withdrawal(withdrwl):
+            total_amt -= withdrwl
+            return total_amt
+
+    -3. def future_interest(int_rate, compound_rate, time):
+            total_amt += (total_amt * Math.pow(1 + (int_rate/compound_rate),
+            (compound_rate * time))
+            return total_amt
+
+Another way you can test your code is through debugging your code. You can also
+run your code and if you get errors, you can utilize the stack trace to find the
+issue, but lets stick to debugging. I select the function I want to test first
+off to the left, then I go through a simulated version of my program in debugging mode.
+I also add print statements to test out problem areas within my code. For example
+if my withdrawal or deposit function aren't working, I could add a print statement
+before the math executes.
+
+    - 4. def deposit(dep):
+            print("hi")
+            total_amt += dep
+            return total_amt
+
+    - 5. def withdrwl(with):
+            print("hi")
+            total_amt -= with
+            return total_amt
+
+4.
+    There are multiple limitations to utilizing numerical methods. One reason
+is that the method doesn't have a physical body to see what actually happens.
+The program only takes in information that is given to it, by users that have
+experienced a certain event. For example, a football coach is inputting the
+names of each individual player on his team. The program cannot read the coach's
+mind, only what he codes. So if the coach gives a wrong name for the index number
+96 in a player list of 100 players, the computer doesn't know it's wrong. The
+same thing can happen to a librarian when checking in returned books. It could
+also happen when a teacher is grading the work of their students.
+
+    - player_list = []
+      for i in range(0, 101, 1):
+          player_list[i] = name that's inputted
+          player_list[97] = wrong name
+
+    - student_name = ""
+      student_grade = []
+      for i in range(0, 35, 1):
+          student_name = inputted name
+          student_grade[i] = inputted wrong grade
+
+    - returned_book_list = []
+      for i in range(0, 100, 1):
+          returned_book_list[i] = ""
+      returned_book_list[95] = wrong title
+
+Another limitation is that both a program and its code doesn't truly reflect
+an object. It only reflects what it believes the object is, what it acts like,
+and how good it is. Take for example; an apple. A program can't discern how good
+an apple tastes by itself. It has to rely on other people, which those people
+might hate apples altogether or just the specific type of apple.
