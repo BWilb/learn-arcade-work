@@ -1,123 +1,188 @@
-import arcade
-import MainCharacter
+import random
+import Germans
+import RomanSoldier
+import RomanCitizens
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
-SPRITE_SCALING = 0.5
-CAMERA_SPEED = 0.45
-MOVEMENT_SPEED = int(input("User how fast would you like your character to move?: "))
-GRAVITY = 0.25
-COIN_COUNT = 100
+"""For my final project, I am creating a mashup of a text adventure and sprite game. """
 
-class Coin(arcade.Sprite):
-    def __int__(self, file_name, coin_scaling):
-        super().__init__(file_name, coin_scaling)
-        self.center_y = None
-        self.center_x = None
-
-class Room():
+class Julius_Caesar:
+    """This class represents Julius Caesar"""
     def __init__(self):
-        self.background = None
-        self.object_list = None
+        self.health = 100
+        # Character's health
+        self.energy = 100
+        # Character's awareness
+        self.hunger = 0
+        # Character's hunger levels
+        self.thirst = 0
+        # Character's thirst levels
+        self.inventory = None
+        # Character's inventory
+        self.army_list = None
+        # Character's army inventory
 
-class MyGame(arcade.Window):
-    def __init__(self):
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Final Project")
-        self.character = MainCharacter.Main_Character
-        self.character().__init__()
-        self.game_scene = None
-        self.physics_engine = None
-        self.coin_list = None
+class Locations:
+    def __init__(self, north, east, south, west):
+        self.description = None
+        self.north = north
+        self.east = east
+        self.south = south
+        self.west = west
 
-        self.character_camera = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.camera_gui = arcade.Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
+def locations():
+    locations = []
+    berlin_germany = Locations(None, None, 1, None)
+    berlin_germany.description = "Known for being the most militarily powerful city amongst the tribes of Germania, " \
+                                 "it was an impressive feat that you were able to sack it.\nHowever it cost you your " \
+                                 "legions. Get out before you and your remaining soldiers are killed. " \
+                                 "Go south to Munich."
+    locations.append(berlin_germany)
 
-    def setup(self):
-        self.game_scene = arcade.Scene()
-        self.game_scene.add_sprite_list("Walls", use_spatial_hash=True)
-        self.game_scene.add_sprite_list("Characters", use_spatial_hash=True)
-        self.character.setup(self)
+    munich_germany = Locations(0, None, 2, 9)
+    munich_germany.description = "Welcome to the heart of Germania's economic activity. Sacking this city would truly "\
+                                 "cripple german war support.\n You can move west to reach Alsaice-Lorraine, "\
+                                 "south to Zurich, or north to Berlin"
+    locations.append(munich_germany)
 
-        """map = "FinalProject.json"
-        """"""Setting up Tiled map""""""
+    zurich_switzerland = Locations(1, 3, 5, None)
+    zurich_switzerland.description = "Ah...the land of peace and chocolate. At least in Zurich, you can't get harmed by"\
+                                     " barbarians if you're considered a traveller \nbut your citizens will be. " \
+                                     "Go south to Rome, go north to Munich, go east to Vienna"
+    locations.append(zurich_switzerland)
 
-        self.tile_map = arcade.load_tilemap(map, scaling=SPRITE_SCALING)
-        self.wall_list = self.tile_map.sprite_lists["Walls"]
+    venice_rome = Locations(2, 9, 6, 5)
+    venice_rome.description = "Venice. Rome's most important city of all, besides Rome itself. \n" \
+                              "being the economic hub that it is, we definitely would not want it to fall into " \
+                              "enemy hands. Go west to Genoa, east to Vienna, south to Rome, north to Zurich"
+    locations.append(venice_rome)
 
-        self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.character,
-            self.wall_list,
-            gravity_constant=GRAVITY
-        )"""
-        """Creation of gravity"""
+    genoa_rome = Locations(None, 3, None, None)
+    genoa_rome.description = "Welcome to Genoa. Most of our finest sailors and merchants come from this city. Go east" \
+                             " to Zurich"
+    locations.append(genoa_rome)
 
-        """map = "FinalProject.json"
-        self.tile_map = arcade.load_tilemap(map, scaling=SPRITE_SCALING)
-        self.wall_list = self.tile_map.sprite_lists["Walls"]"""
+    rome_rome = Locations(2, None, 10, None)
+    rome_rome.description = "Rome. Look at her splendor. The marble white columns, the paved roads, the Colosseum \n" \
+                            "we definitely wouldn't want this city to come under fire. Go south to Naples or go " \
+                            "North to Zurich."
+    locations.append(rome_rome)
 
-        self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.character,
-            self.wall_list,
-            gravity_constant=GRAVITY
-        )
+    vienna_germany = Locations(None, 7, None, 2)
+    vienna_germany.description = "Ah...Vienna, a sacred place of battle for the Romans. This where " \
+                                 "we first defeated the Germanic barbarians.\nNow the city lies smoldering. Go east to"\
+                                 " Budapest or go west to Zurich."
+    locations.append(vienna_germany)
 
-        """if self.tile_map.background_color:
-            arcade.set_background_color(self.tile_map.background_color)
-        else:
-            arcade.set_background_color(arcade.color.GOLD)"""
+    budapest_hun = Locations(None, None, 8, 6)
+    budapest_hun.description = "No time to explain, Budapest Hungary is full of dangerous Huns. Get out before we are" \
+                               " spotted! Go west to Vienna. Go south to Belgrade"
+    locations.append(budapest_hun)
 
-    def on_draw(self):
-        arcade.start_render()
-        self.character_camera.use()
-        self.wall_list.draw()
-        self.character.draw()
-        self.camera_gui.use()
+    belgrade_serb = Locations(7, None, None, None)
+    belgrade_serb.description = "Rome has not yet conquered Belgrade, but the Almighty Caesar knows his next target. \n"\
+                                "Go north to Budapest"
+    locations.append(belgrade_serb)
 
-        """arcade.draw_rectangle_filled(self.width // 2,
-                                     20,
-                                     self.width,
-                                     40,
-                                     arcade.color.ALMOND)
-        text = f"Scroll value: ({self.character_camera.position[0]:5.1f}, " \
-               f"{self.character_camera.position[1]:5.1f})"
-        
+    alsaice_france = Locations(None, 1, None, None)
+    alsaice_france.description = "Alsaice Gaul. Rome knows nothing about this territory. Go east to Berlin"
+    locations.append(alsaice_france)
 
-        arcade.draw_text(text, 10, 10, arcade.color.BLACK_LEATHER_JACKET, 20)"""
-
-    def on_key_press(self, key: int, modifiers: int):
-        if key == arcade.key.RIGHT:
-            self.character.change_x = MOVEMENT_SPEED
-        elif key == arcade.key.LEFT:
-            self.character.change_x = -MOVEMENT_SPEED
-        elif key == arcade.key.UP:
-            self.character.change_y = MOVEMENT_SPEED
-        elif key == arcade.key.DOWN:
-            self.character.change_y = -MOVEMENT_SPEED
-
-    def on_key_release(self, key: int, modifiers: int):
-        if key == arcade.key.UP or key == arcade.key.DOWN:
-            self.character.change_y = 0
-        elif key == arcade.key.RIGHT or key == arcade.key.LEFT:
-            self.character.change_x = 0
-
-    def on_update(self, delta_time: float):
-        self.character.update()
-
-        self.physics_engine.update()
-        self.scroll_to_player()
-
-    def scroll_to_player(self):
-        position = self.character.center_x - self.width / 2, \
-                   self.character.center_y - self.height / 2
-        self.character_camera.move_to(position, CAMERA_SPEED)
-
-    def on_resize(self, width: float, height: float):
-        self.character_camera.resize(int(width), int(height))
-        self.camera_gui.resize(int(width), int(height))
+    naples_rome = Locations(5, None, None, None)
+    naples_rome.description = "Congrats, you've made it back to Naples, possibly unscathed or not. Go back and kick the" \
+                              " Germans from Rome's soil."
+    locations.append(naples_rome)
+    return locations
 
 def main():
-    window = MyGame()
-    window.setup()
-    arcade.run()
+    total_miles_travelled = 0
+    barbarian_distance = -15
+    choices = ["Move",
+               "Stop and rest",
+               "Eat",
+               "Drink",
+               "View Map"]
+    # Choices that Caesar has
+
+    directions = ["\nNorth",
+                  "South",
+                  "East",
+                  "West\n"]
+
+    german_warriors = [100]
+    for i in range(len(german_warriors)):
+        german_warriors[i] = Germans.Germans()
+        # Creation of 100 German opponents
+
+    roman_soldiers = [200]
+    for i in range(len(roman_soldiers)):
+        roman_soldiers[i] = RomanSoldier.Roman_Soldier()
+        # Creation of 200 Roman soldiers
+
+    roman_citizens = [15000]
+    for i in range(len(roman_citizens)):
+        roman_citizens[i] = RomanCitizens.RomanCitizens()
+        # Creation of 15000 Roman civilians
+
+    caesar = Julius_Caesar()
+    current_country = 0
+    alive = True
+    countries = locations()
+
+    print("Welcome player. You will be playing as Julius Caesar. You are currently in the territory of the barbaric"
+          " German tribes.\nYou've recently scored a major victory against the Germans, however your legions were "
+          "desimiated.\nYou are to return to Naples Rome, all the while; gathering more troops and supplies along the way."
+          "\nYou will be able to sight see many of the cities Rome has conquered or will conquer, but be warned"
+          "the Germans are regathering their own army.\nTry to avoid contact at all costs and return to Naples as quickly"
+          " as possible, since they are after Roman wealth as well.\n")
+
+
+    while alive is not False:
+        print(countries[current_country].description)
+        for i in range(len(choices)):
+            print(choices[i])
+        caesar_choice = input("\nWhat would you like to do?: ")
+
+        if caesar_choice.lower() == "move" or caesar_choice.lower() == "m":
+            """"""
+            caesar.energy -= random.randrange()
+            for i in range(len(directions)):
+                print(directions[i])
+            direction = input("Which direction would you like to move?: ")
+            if direction.lower() == "north" or direction.lower() == "n":
+                next_country = countries[current_country].north
+                if countries[current_country].north is None:
+                    print("you cant go that way")
+                else:
+                    current_country = next_country
+
+            elif direction.lower() == "south" or direction.lower() == "s":
+                next_country = countries[current_country].south
+                if countries[current_country].south is None:
+                    print("you cant go that way")
+                else:
+                    current_country = next_country
+
+            elif direction.lower() == "east" or direction.lower() == "e":
+                next_country = countries[current_country].east
+                if countries[current_country].east is None:
+                    print("you cant go that way")
+                else:
+                    current_country = next_country
+            elif direction.lower() == "west" or direction.lower() == "w":
+                next_country = countries[current_country].west
+                if countries[current_country].west is None:
+                    print("you cant go that way")
+                else:
+                    current_country = next_country
+            else:
+                print("I am sorry, that option is not available. Try again, but remember the Germans are currently hunting "
+                      "you down.")
+
+        print()
 
 main()
+"""country = []
+for countries in range(len(LocationDescriptions.locations())):
+    country.append(LocationDescriptions.locations()[countries].description)
+
+print(country[1])"""
