@@ -98,7 +98,7 @@ def locations():
     locations.append(belgrade_serb)
 
     """Greek Cities"""
-    athens_greece = Locations(None, 12, 10, None, None, None, None, None)
+    athens_greece = Locations(None, 10, None, None, None, 12, None, None)
     athens_greece.description = "Athens Greece...the birth place of democracy and Plato's Republic. I shall implement ideals" \
                                 " that once flowed through this very city once I return to Rome.\n" \
                                 "Go north east to Belgrade, go south east to Sparta."
@@ -112,12 +112,62 @@ def locations():
 
     return locations
 
+def health_conditions(health):
+    """Function determines health conditions"""
+    if health <= 200:
+        print("you are in good condition")
+    elif health <= 125:
+        print("You are in mediocre condition")
+    elif health <= 75:
+        print("You are in poor health. Get some sleep or something to eat or drink.")
+    else:
+        print("You are in horrible health. Sleep, eating, or drinking is REQUIRED!!!!")
+
+def energy_conditions(energy):
+    """Function determines energy conditions"""
+    if energy <= 50:
+        print("Your energy is low, get some sleep")
+
+def hunger_thirst_conditions(hunger, thirst):
+    """Function determines hunger and thirst conditions"""
+    if hunger >= 8:
+        print("You are a hungry boy. Get something to eat.")
+    if thirst >= 8:
+        print("You are a thirsty boy. Get something to drink.")
+
+def german_list():
+    """Creation of Germans"""
+    german_list = []
+    for i in range(1500):
+        german = German.Germans()
+        german_list.append(german)
+        # Creation of 1500 German opponents
+    return german_list
+
+def roman_solider_list():
+    """Creation of Roman soldiers"""
+    roman_sold = []
+    for i in range(2500):
+        roman = RomanSoldier.Roman_Soldier()
+        roman_sold.append(roman)
+        # Creation of 2500 Roman soldiers
+    return roman_sold
+
+def roman_civilian_list():
+    """Creation of Roman civilians"""
+    roman_civ = []
+    for i in range(500000):
+        rome = RomanCitizen.RomanCitizens()
+        roman_civ.append(rome)
+        # Creation of 500,000 Roman civilians
+        # I know that Rome only had 5,000,000 civilians. I tried to apply five million, but it took to long to load
+        # Each turn, per if one German is on Roman/Italian soil, a Roman civilian dies
+    return roman_civ
+
 def main():
     total_miles_travelled = 0
     supplies_list = ["food", "food", "food", "water", "water", "water\n"]
-    barbarian_miles = 0
     death = 0
-    attack = 0
     choices = ["Move",
                "Stop and rest",
                "Eat",
@@ -136,25 +186,9 @@ def main():
                   "East",
                   "West\n"]
 
-    german_warriors = []
-    for i in range(1500):
-        german = German.Germans()
-        german_warriors.append(german)
-        # Creation of 1500 German opponents
-
-    roman_soldiers = []
-    for i in range(2500):
-        roman = RomanSoldier.Roman_Soldier()
-        roman_soldiers.append(roman)
-        # Creation of 2500 Roman soldiers
-
-    roman_citizens = []
-    for i in range(500000):
-        rome = RomanCitizen.RomanCitizens()
-        roman_citizens.append(rome)
-        # Creation of 10,000,000,000 Roman civilians
-        # I know that Rome only had 5,000,000 civilians, I'm just giving player a chance
-        # Each turn, per if one German is on Roman soil, a Roman civilian dies
+    german_warriors = german_list()
+    roman_soldiers = roman_solider_list()
+    roman_citizens = roman_civilian_list()
 
     caesar = JuliusCaesar()
     current_country = 0
@@ -163,11 +197,11 @@ def main():
 
     print("Welcome player. You will be playing as Julius Caesar. You are currently in the territory of the barbaric"
           " German tribes.\nYou've recently scored a major victory against the Germans, however your legions were "
-          "desimiated.\nYou are to return to Naples Rome, all the while; gathering more troops and supplies along the way."
-          "\nYou will be able to sight see many of the cities Rome has conquered or will conquer. Be warned though, you may have "
-          "won a battle against the Germans, but you haven't scared them into submission. There's still many bands of Germans "
-          "across Germany and Roman soil.\nTry to avoid contact at all costs and return to Naples as quickly "
-          "as possible, since they are after Roman wealth as well.\n:")
+          "desimiated.\nHowever, you still have 2500 soldiers left. You are to return to Naples Rome, all the while; "
+          "gathering more troops and supplies along the way.\nYou will be able to sight see many of the cities Rome has conquered"
+          " or will conquer. Be warned though, you may have won a battle against the Germans, but you haven't scared them into "
+          "submission. There's still many bands of Germans across Germany and Roman soil.\nTry to avoid contact at all costs and "
+          "return to Naples as quickly as possible, since they are after Roman wealth as well.\n:")
 
     while alive is not False:
         print(major_cities[current_country].description)
@@ -186,9 +220,10 @@ def main():
                 caesar.hunger += random.randrange(1, 5)
                 caesar.thirst += random.randrange(1, 5)
                 for march in range(len(roman_soldiers)):
-                    roman_soldiers[march].health -= random.randrange(0, 50)
+                    roman_soldiers[march].health -= random.randrange(0, 5)
                     if roman_soldiers[march].health <= 25:
                         troop_exhaustion += 1
+                        print("your troops are tired. Let them rest")
                     elif roman_soldiers[march].health <= 0:
                         roman_soldiers.remove(roman_soldiers[march])
 
@@ -341,12 +376,16 @@ def main():
         except:
             print("You are supposed to insert the specific number to your choice.\n")
 
-        if total_miles_travelled % 20 == 40:
-
+        if total_miles_travelled % 20 == 5:
+            """
+            Random event 
+            """
             legion_additions = random.randrange(1, 1000)
             print(f"Congrats you have stumbled across {legion_additions} people who would like to join the Roman cause")
-            for add in range(legion_additions):
-                roman_soldiers.append(roman_soldiers[add])
+            caesar_response = input("Will you accept?: ")
+            if caesar_response.lower() == "yes" or caesar_response.lower() == "y":
+                for add in range(0, (legion_additions + 1)):
+                    roman_soldiers.append(roman_soldiers[add])
 
         if total_miles_travelled % 12 == 8:
             """Creation of random event.
@@ -378,18 +417,23 @@ def main():
                     or german_warriors[i].location == 8:
                 death += 1
         """Since the germans are moving around regardless of what Caesar is doing...if a specific german warrior's
-            location is centered around the indicies of any Roman city, then one Roman civilian dies.
+            location is centered around the indices of any Roman city, then one Roman civilian dies.
         """
         for loss in range(death):
             roman_citizens.remove(roman_citizens[loss])
         death = 0
 
-        if caesar.health <= 0 and caesar.energy <= 0 or (caesar.hunger >= 15 and caesar.thirst >= 15):
+        if caesar.health <= 0 or caesar.energy <= 0 or (caesar.hunger >= 15 and caesar.thirst >= 15):
             print("You have died")
             break
 
-        if caesar.health >= 25:
-            print("You need to sleep")
+        energy_conditions(caesar.energy)
+        health_conditions(caesar.health)
+        hunger_thirst_conditions(caesar.hunger, caesar.thirst)
+
+        if len(roman_soldiers) <= 0:
+            print("Your armada of soldiers no longer exists and you are surrounded")
+            break
 
 main()
 """country = []
