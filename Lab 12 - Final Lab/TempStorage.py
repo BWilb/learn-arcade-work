@@ -1,7 +1,7 @@
 import random
-import German
-import RomanSoldier
-import RomanCitizen
+import german
+import roman_soldier
+import roman_citizen
 
 """For my final project, I am creating a mashup of a text adventure and sprite game. """
 
@@ -28,6 +28,8 @@ class JuliusCaesar:
         # Caesar's civilian loss
         self.score_card = 0
         # Caesar's german kill count
+        self.total_miles_travelled = 0
+        # Caesar's total miles travelled
 
 class Locations:
     def __init__(self, north, north_east, north_west, east, south, south_east, south_west, west):
@@ -124,55 +126,53 @@ def locations():
 
     return locations
 
-def health_conditions(health):
+def health_conditions(caesar):
     """Function determines health conditions"""
-    if health <= 200:
+    if caesar.health <= 200:
         print("you are in good condition\n")
-    elif health <= 125:
+    elif caesar.health <= 125:
         print("You are in mediocre condition\n")
-    elif health <= 75:
+    elif caesar.health <= 75:
         print("You are in poor condition. Get some sleep or something to eat or drink.\n")
     else:
         print("You are in horrible condition. Sleep, eating, or drinking is REQUIRED!!!!\n")
 
-def energy_conditions(energy):
+def energy_conditions(caesar):
     """Function determines energy conditions"""
-    if energy <= 50:
+    if caesar.energy <= 50:
         print("Your energy is low, get some sleep\n")
 
-def hunger_thirst_conditions(hunger, thirst):
+def hunger_thirst_conditions(caesar):
     """Function determines hunger and thirst conditions"""
-    if hunger >= 8:
+    if caesar.hunger >= 8:
         print("You are a hungry boy. Get something to eat.\n")
-    if thirst >= 8:
+    if caesar.thirst >= 8:
         print("You are a thirsty boy. Get something to drink.\n")
 
 def german_list():
     """Creation of Germans"""
     german_list = []
     for i in range(5500):
-        german = German.Germans()
-        german_list.append(german)
+        germans = german.Germans()
+        german_list.append(germans)
         # Creation of 5500 German opponents
     return german_list
 
 def roman_solider_list(caesar):
     """Creation of Roman soldiers"""
     for i in range(2500):
-        roman = RomanSoldier.Roman_Soldier()
+        roman = roman_soldier.Roman_Soldier()
         caesar.troop_list.append(roman)
         # Creation of 2500 Roman soldiers
 
 def roman_civilian_list(caesar):
     """Creation of Roman civilians"""
-    roman_civ = []
     for i in range(500000):
-        rome = RomanCitizen.RomanCitizens()
-        roman_civ.append(rome)
+        rome = roman_citizen.RomanCitizens()
+        caesar.civilian_list.append(rome)
         # Creation of 500,000 Roman civilians
         # I know that Rome only had 5,000,000 civilians. I tried to apply five million, but it took to long to load
         # Each turn, per if one German is on Roman/Italian soil, a Roman civilian dies
-    return roman_civ
 
 def caesar_rest(caesar):
     caesar.health = 100
@@ -236,7 +236,7 @@ def stats(caesar):
     for food in range(len(caesar.inventory)):
         print(f"{food + 1}", caesar.inventory[food])
 
-def random_event_soldier(caesar, total_miles_travelled):
+def random_event_soldier(caesar):
         """
         Random event that allows you to gain more soldiers
         """
@@ -246,6 +246,7 @@ def random_event_soldier(caesar, total_miles_travelled):
         if caesar_response.lower() == "yes" or caesar_response.lower() == "y":
             for add in range(0, (legion_additions + 1)):
                 caesar.troop_list.append(caesar.troop_list[add])
+
 def check_troop_exhaustion(caesar):
     troop_exhaustion = 0
     for march in range(len(caesar.troop_list)):
@@ -258,7 +259,6 @@ def check_troop_exhaustion(caesar):
 
 def main():
     caesar = JuliusCaesar()
-    total_miles_travelled = 0
     death = 0
     choices = ["Move",
                "Stop and rest",
@@ -324,7 +324,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 if direction.lower() == "north east" or direction.lower() == "ne":
                     # If statement that determines where you go, when you select direction
@@ -333,7 +333,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 if direction.lower() == "north west" or direction.lower() == "nw":
                     # If statement that determines where you go, when you select direction
@@ -342,7 +342,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south" or direction.lower() == "s":
                     next_country = major_cities[current_country].south
@@ -350,7 +350,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south east" or direction.lower() == "se":
                     next_country = major_cities[current_country].south_east
@@ -358,7 +358,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south west" or direction.lower() == "sw":
                     next_country = major_cities[current_country].south_west
@@ -366,7 +366,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "east" or direction.lower() == "e":
                     next_country = major_cities[current_country].east
@@ -374,7 +374,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "west" or direction.lower() == "w":
                     next_country = major_cities[current_country].west
@@ -382,7 +382,7 @@ def main():
                         print("you cant go that way")
                     else:
                         current_country = next_country
-                        total_miles_travelled += random.randrange(1, 400)
+                        caesar.total_miles_travelled += random.randrange(1, 400)
                 else:
                     print("I don't understand what you mean!!!!!")
 
@@ -415,11 +415,12 @@ def main():
 
         except:
             print("You are supposed to insert the specific number to your choice.\n")
-        if total_miles_travelled % 20 == 5:
-            roman_soldiers = random_event_soldier(caesar, total_miles_travelled)
+
+        if caesar.total_miles_travelled % 20 == 5:
+            random_event_soldier(caesar)
         # Function, that adds more soldiers to your armada
 
-        if total_miles_travelled % 12 == 8:
+        if caesar.total_miles_travelled % 12 == 8:
             """Creation of random event.
                 Caesar runs into group of Germans and loses heatlh, energy, and troops, due to fighting with 
                 group. Group of Germans also take some blows.
@@ -455,7 +456,7 @@ def main():
         """Since the germans are moving around regardless of what Caesar is doing...if a specific german warrior's
             location is centered around the indices of any Roman city, then one Roman civilian dies per turn.
         """
-        for loss in range(0, (death + 1)):
+        for loss in range(0, death):
             caesar.civilian_list.remove(caesar.civilian_list[loss])
         death = 0
 
@@ -463,9 +464,9 @@ def main():
             print("You have died")
             break
 
-        energy_conditions(caesar.energy)
-        health_conditions(caesar.health)
-        hunger_thirst_conditions(caesar.hunger, caesar.thirst)
+        energy_conditions(caesar)
+        health_conditions(caesar)
+        hunger_thirst_conditions(caesar)
         check_troop_exhaustion(caesar)
 
         if len(caesar.troop_list) <= 0:
@@ -477,8 +478,3 @@ def main():
             break
 
 main()
-"""country = []
-for countries in range(len(LocationDescriptions.locations())):
-    country.append(LocationDescriptions.locations()[countries].description)
-
-print(country[1])"""
