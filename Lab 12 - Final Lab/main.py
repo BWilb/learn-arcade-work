@@ -2,6 +2,7 @@ import random
 import german
 import roman_soldier
 import roman_citizen
+import sprite_game
 
 """For my final project, I am creating a mashup of a text adventure and sprite game. """
 
@@ -29,6 +30,8 @@ class JuliusCaesar:
         self.score_card = 0
         # Caesar's german kill count
         self.total_miles_travelled = 0
+        # Caesar's total miles travelled
+        self.caesar_locations = None
 
 class Locations:
     def __init__(self, north, north_east, north_west, east, south, south_east, south_west, west):
@@ -72,9 +75,9 @@ def locations():
 
     """Roman cities"""
     venice_rome = Locations(1, 2, 3, None, None, None, 6, 5)
-    venice_rome.description = "Venice. Rome's most important city of all, besides Rome itself. \n" \
+    venice_rome.description = "Venice. Rome's most important city of all, besides Rome itself.\n" \
                               "being the economic hub that it is, we definitely would not want it to fall into " \
-                              "enemy hands. Go west to Genoa, north to Munich," \
+                              "enemy hands. Go west to Genoa, north to Munich,\n" \
                               " north east to Vienna, south west to Rome, north west to Zurich\n"
     locations.append(venice_rome)
 
@@ -125,6 +128,16 @@ def locations():
 
     return locations
 
+def caesar_death(caesar):
+    if caesar.health <= 0:
+        print("you died due to loss of all health points")
+    elif caesar.thirst >= 20:
+        print("you died due to extreme thirst")
+    elif caesar.hunger >= 25:
+        print("you died due to extreme hunger")
+    elif caesar.energy <= 0:
+        print("you died due to low energy")
+
 def health_conditions(caesar):
     """Function determines health conditions"""
     if caesar.health <= 200:
@@ -139,7 +152,9 @@ def health_conditions(caesar):
 def energy_conditions(caesar):
     """Function determines energy conditions"""
     if caesar.energy <= 50:
-        print("Your energy is low, get some sleep\n")
+        print("Your energy is low, get some sleep")
+    if caesar.energy <= 25:
+        print("your energy is low. SLEEP IS REQUIRED!!!!!\n")
 
 def hunger_thirst_conditions(caesar):
     """Function determines hunger and thirst conditions"""
@@ -223,8 +238,11 @@ def caesar_drink(caesar):
 
     print("you chose to drink")
 
-def stats(caesar):
+def stats(caesar, germans):
     # If function that shows player their stats
+    german = 0
+    for i in range(len(germans)):
+        german += 1
     print(f"Your energy levels are {caesar.energy}")
     print(f"You have {caesar.health} health pts")
     print(f"You have {caesar.thirst} thirst pts")
@@ -233,7 +251,10 @@ def stats(caesar):
     print(f"There are {len(caesar.civilian_list)} citizens left")
     print(f"You have killed {caesar.score_card} germans")
     for food in range(len(caesar.inventory)):
-        print(f"{food + 1}", caesar.inventory[food])
+        print(f"{food + 1}. " + caesar.inventory[food])
+    print(f"you have {caesar.hunger} hunger")
+    print(f"you have {caesar.thirst} thirst")
+    print(f"there are {german} germans left\n")
 
 def random_event_soldier(caesar):
         """
@@ -246,16 +267,6 @@ def random_event_soldier(caesar):
             for add in range(0, (legion_additions + 1)):
                 caesar.troop_list.append(caesar.troop_list[add])
 
-def check_troop_exhaustion(caesar):
-    troop_exhaustion = 0
-    for march in range(len(caesar.troop_list)):
-        caesar.troop_list[march].health -= random.randrange(0, 5)
-        if caesar.troop_list[march].health <= 25:
-            troop_exhaustion += 1
-            print("your troops are tired. Let them rest")
-        elif caesar.troop_list[march].health <= 0:
-            caesar.troop_list.remove(caesar.troop_list[march])
-
 def main():
     caesar = JuliusCaesar()
     death = 0
@@ -263,7 +274,6 @@ def main():
                "Stop and rest",
                "Eat",
                "Drink",
-               "View Map",
                "Quit",
                "View Stats"]
     # Choices that Caesar has
@@ -286,7 +296,7 @@ def main():
 
     current_country = 0
     alive = True
-    major_cities = locations()
+    caesar.caesar_locations = locations()
 
     print("Welcome player. You will be playing as Julius Caesar. You are currently in the territory of the barbaric"
           " German tribes.\nYou've recently scored a major victory against the Germans, however your legions were "
@@ -294,10 +304,15 @@ def main():
           "gathering more troops and supplies along the way.\nYou will be able to sight see many of the cities Rome has conquered"
           " or will conquer. Be warned though, you may have won a battle against the Germans,\nbut you haven't scared them into "
           "submission. There's still many bands of Germans across Germany and Roman soil.\nTry to avoid contact at all costs and "
-          "return to Naples as quickly as possible, since they are after Roman wealth as well.\n:")
+          "return to Naples as quickly as possible, since they are after Roman wealth as well.\n")
 
     while alive is not False:
-        print(major_cities[current_country].description)
+        """Main loop that controls program"""
+        print(caesar.caesar_locations[current_country].description)
+        if current_country == 7:
+            sprite_game.main()
+            break
+
         for i in range(len(choices)):
             print((i + 1), choices[i])
         try:
@@ -318,8 +333,8 @@ def main():
                 direction = input("Which direction would you like to move?: ")
                 if direction.lower() == "north" or direction.lower() == "n":
                     # If statement that determines where you go, when you select direction
-                    next_country = major_cities[current_country].north
-                    if major_cities[current_country].north is None:
+                    next_country = caesar.caesar_locations[current_country].north
+                    if caesar.caesar_locations[current_country].north is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
@@ -327,8 +342,8 @@ def main():
 
                 if direction.lower() == "north east" or direction.lower() == "ne":
                     # If statement that determines where you go, when you select direction
-                    next_country = major_cities[current_country].north_east
-                    if major_cities[current_country].north_east is None:
+                    next_country = caesar.caesar_locations[current_country].north_east
+                    if caesar.caesar_locations[current_country].north_east is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
@@ -336,48 +351,48 @@ def main():
 
                 if direction.lower() == "north west" or direction.lower() == "nw":
                     # If statement that determines where you go, when you select direction
-                    next_country = major_cities[current_country].north_west
-                    if major_cities[current_country].north_west is None:
+                    next_country = caesar.caesar_locations[current_country].north_west
+                    if caesar.caesar_locations[current_country].north_west is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
                         caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south" or direction.lower() == "s":
-                    next_country = major_cities[current_country].south
-                    if major_cities[current_country].south is None:
+                    next_country = caesar.caesar_locations[current_country].south
+                    if caesar.caesar_locations[current_country].south is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
                         caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south east" or direction.lower() == "se":
-                    next_country = major_cities[current_country].south_east
-                    if major_cities[current_country].south_east is None:
+                    next_country = caesar.caesar_locations[current_country].south_east
+                    if caesar.caesar_locations[current_country].south_east is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
                         caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "south west" or direction.lower() == "sw":
-                    next_country = major_cities[current_country].south_west
-                    if major_cities[current_country].south_west is None:
+                    next_country = caesar.caesar_locations[current_country].south_west
+                    if caesar.caesar_locations[current_country].south_west is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
                         caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "east" or direction.lower() == "e":
-                    next_country = major_cities[current_country].east
-                    if major_cities[current_country].east is None:
+                    next_country = caesar.caesar_locations[current_country].east
+                    if caesar.caesar_locations[current_country].east is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
                         caesar.total_miles_travelled += random.randrange(1, 400)
 
                 elif direction.lower() == "west" or direction.lower() == "w":
-                    next_country = major_cities[current_country].west
-                    if major_cities[current_country].west is None:
+                    next_country = caesar.caesar_locations[current_country].west
+                    if caesar.caesar_locations[current_country].west is None:
                         print("you cant go that way")
                     else:
                         current_country = next_country
@@ -396,17 +411,14 @@ def main():
                 # If statement if user chooses to eat
                 caesar_drink(caesar)
 
-            # elif caesar_choice.lower() == "view map" or caesar_choice.lower() == "v":
-            # If statement that shows user where they are
-
-            elif caesar_choice == 6 or caesar_choice == 6:
+            elif caesar_choice == 5 or caesar_choice == 5:
                 # If function that closes game if user chooses to
                 print("good choice\n"
                       "goodbye")
                 break
 
-            elif caesar_choice == 7 or caesar_choice == 7:
-                stats(caesar)
+            elif caesar_choice == 6 or caesar_choice == 6:
+                stats(caesar, german_warriors)
 
             else:
                 print("I'm sorry that option is not available. Just remember there are Germans everywhere, who are after"
@@ -415,17 +427,17 @@ def main():
         except:
             print("You are supposed to insert the specific number to your choice.\n")
 
-        if caesar.total_miles_travelled % 20 == 5:
+        if caesar.total_miles_travelled % 6 == 2 and caesar.total_miles_travelled != 0:
             random_event_soldier(caesar)
         # Function, that adds more soldiers to your armada
 
-        if caesar.total_miles_travelled % 12 == 8:
+        if caesar.total_miles_travelled % 6 == 5 and caesar.total_miles_travelled != 0:
             """Creation of random event.
                 Caesar runs into group of Germans and loses heatlh, energy, and troops, due to fighting with 
                 group. Group of Germans also take some blows.
                 I can't make this a separate module, since i need to return more than one value
             """
-            germans = random.randrange(len(german_warriors) // 10)
+            germans = random.randrange(len(german_warriors) // 25)
             print(f"You encountered a group of angry germans with {germans} members")
             caesar.health -= random.randrange(germans)
             caesar.energy -= random.randrange(germans // 2)
@@ -447,7 +459,7 @@ def main():
             print(f"However you did defeat {german_losses} germans")
 
         for i in range(len(german_warriors)):
-            german_warriors[i].location = random.randrange(len(major_cities))
+            german_warriors[i].location = random.randrange(len(caesar.caesar_locations))
             if german_warriors[i].location == 5 or german_warriors[i].location == 6 or german_warriors[i].location == 7 \
                     or german_warriors[i].location == 8:
                 death += 1
@@ -459,18 +471,10 @@ def main():
             caesar.civilian_list.remove(caesar.civilian_list[loss])
         death = 0
 
-        if caesar.health <= 0 or caesar.energy <= 0 or (caesar.hunger >= 15 and caesar.thirst >= 15):
-            print("You have died")
-            break
-
+        caesar_death(caesar)
         energy_conditions(caesar)
         health_conditions(caesar)
         hunger_thirst_conditions(caesar)
-        check_troop_exhaustion(caesar)
-
-        if len(caesar.troop_list) <= 0:
-            print("Your armada of soldiers no longer exists and you are surrounded")
-            break
 
         if len(german_warriors) <= 0:
             print("Congrats you defeated every German")

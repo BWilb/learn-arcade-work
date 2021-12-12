@@ -13,7 +13,7 @@ class German(arcade.Sprite):
 
         super().__init__(filename, sprite_scaling)
         self.change_x = 0
-        self.health = 60
+        self.health = 50
 
     def update(self):
         if self.left < 0:
@@ -195,7 +195,6 @@ class RomanGame(arcade.Window):
         self.german_count_three = None
         self.german_count_four = None
         self.german_total = 0
-        self.german_amount = None
 
     def setup(self):
 
@@ -212,25 +211,21 @@ class RomanGame(arcade.Window):
         self.german_count_one = city_one().german_list
         print("Hi")
         self.german_total += len(self.german_count_one)
-        self.german_amount += len(self.german_count_one)
         self.cities.append(self.city)
 
         self.city = city_two()
         self.german_count_two = city_two().german_list
         self.german_total += len(self.german_count_two)
-        self.german_amount += len(self.german_count_two)
         self.cities.append(self.city)
 
         self.city = city_three()
         self.german_count_three = city_three().german_list
         self.german_total += len(self.german_count_three)
-        self.german_amount += len(self.german_count_three)
         self.cities.append(self.city)
 
         self.city = city_four()
         self.german_count_four = city_four().german_list
         self.german_total += len(self.german_count_four)
-        self.german_amount += len(self.german_count_four)
         self.cities.append(self.city)
 
         self.current_city = 0
@@ -239,7 +234,7 @@ class RomanGame(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
-        if self.german_amount > 0 and self.caesar_health >= 0:
+        if self.german_total > 0 and self.caesar_health >= 0:
             arcade.draw_lrwh_rectangle_textured(0, 0,
                                                 SCREEN_WIDTH, SCREEN_HEIGHT, self.cities[self.current_city].background)
             self.cities[self.current_city].ground_list.draw()
@@ -256,7 +251,7 @@ class RomanGame(arcade.Window):
                 self.cities[self.current_city].german_list.draw()
             self.player_list.draw()
 
-        elif self.german_amount == 0:
+        elif self.german_total <= 0:
             arcade.draw_text("Congrats, you defeated every german", 400, 400, arcade.csscolor.WHITE)
             arcade.finish_render()
 
@@ -268,7 +263,7 @@ class RomanGame(arcade.Window):
         arcade.draw_text(f"Current health: {self.caesar_health}", 400, 25, arcade.csscolor.GOLD)
 
     def on_update(self, delta_time: float):
-        if self.german_amount > 0 or self.caesar_health >= 0:
+        if self.german_total > 0 or self.caesar_health >= 0:
             self.player_list.update()
             self.caesar_sprite.update()
             self.physics_engine.update()
@@ -284,7 +279,7 @@ class RomanGame(arcade.Window):
             german_threes = self.german_count_three
             german_fours = self.german_count_four
             attack = random.randrange(0, 60)
-            german_attack = random.randrange(0, 25)
+            german_attack = random.randrange(0, 56)
 
             if self.current_city == 0:
                 for i in range(len(german_ones)):
