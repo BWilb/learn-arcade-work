@@ -37,28 +37,29 @@ def city_one():
 
     for x in range(0, SCREEN_WIDTH, 32):
         floor = arcade.Sprite("stoneCenter.png", SPRITE_SCALING)
-        floor.center_x = SCREEN_WIDTH - 16
+        floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
 
+
     germans = random.randrange(1, 5)
     for german in range(germans):
-        barbarian = German("german.png", SPRITE_SCALING)
+        city.barbarian = German("german.png", SPRITE_SCALING)
         barbarian_successful = False
 
         while not barbarian_successful:
 
-            barbarian.center_x = random.randrange(SCREEN_WIDTH)
-            barbarian.center_y = 32
+            city.barbarian.center_x = random.randrange(SCREEN_WIDTH)
+            city.barbarian.center_y = 32
 
-            german_hit_list = arcade.check_for_collision_with_list(barbarian, city.ground_list)
+            german_hit_list = arcade.check_for_collision_with_list(city.barbarian, city.ground_list)
 
-            german_german = arcade.check_for_collision_with_list(barbarian, city.german_list)
+            german_german = arcade.check_for_collision_with_list(city.barbarian, city.german_list)
 
             if len(german_hit_list) == 0 and len(german_german) == 0:
                 barbarian_successful = True
 
-        city.german_list.append(barbarian)
+        city.german_list.append(city.barbarian)
     city.background = arcade.load_texture("naples.png")
     """Heath Elizabeth. Top Neighborhoods in Naples. Tripsavvy, 19 Oct 2020,
     https://www.tripsavvy.com/top-neighborhoods-in-naples-5079807. 
@@ -70,31 +71,30 @@ def city_two():
     city = City()
     city.ground_list = arcade.SpriteList()
     city.german_list = arcade.SpriteList()
-
     for x in range(0, SCREEN_WIDTH, 32):
         floor = arcade.Sprite("stoneCenter.png", SPRITE_SCALING)
-        floor.center_x = SCREEN_WIDTH - 16
+        floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
 
     germans = random.randrange(1, 5)
     for german in range(germans):
-        barbarian = German("german.png", SPRITE_SCALING)
+        city.barbarian = German("german.png", SPRITE_SCALING)
         barbarian_successful = False
 
         while not barbarian_successful:
 
-            barbarian.center_x = random.randrange(SCREEN_WIDTH)
-            barbarian.center_y = 32
+            city.barbarian.center_x = random.randrange(SCREEN_WIDTH)
+            city.barbarian.center_y = 32
 
-            german_hit_list = arcade.check_for_collision_with_list(barbarian, city.ground_list)
+            german_hit_list = arcade.check_for_collision_with_list(city.barbarian, city.ground_list)
 
-            german_german = arcade.check_for_collision_with_list(barbarian, city.german_list)
+            german_german = arcade.check_for_collision_with_list(city.barbarian, city.german_list)
 
             if len(german_hit_list) == 0 and len(german_german) == 0:
                 barbarian_successful = True
 
-        city.german_list.append(barbarian)
+        city.german_list.append(city.barbarian)
 
     city.background = arcade.load_texture("rome.png")
     """Rome. Travel Pulse, 05 Nov 2021, 
@@ -110,28 +110,28 @@ def city_three():
 
     for x in range(0, SCREEN_WIDTH, 32):
         floor = arcade.Sprite("stoneCenter.png", SPRITE_SCALING)
-        floor.center_x = SCREEN_WIDTH - 16
+        floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
 
     germans = random.randrange(1, 5)
     for german in range(germans):
-        barbarian = German("german.png", SPRITE_SCALING)
+        city.barbarian = German("german.png", SPRITE_SCALING)
         barbarian_successful = False
 
         while not barbarian_successful:
 
-            barbarian.center_x = random.randrange(SCREEN_WIDTH)
-            barbarian.center_y = 32
+            city.barbarian.center_x = random.randrange(SCREEN_WIDTH)
+            city.barbarian.center_y = 32
 
-            german_hit_list = arcade.check_for_collision_with_list(barbarian, city.ground_list)
+            german_hit_list = arcade.check_for_collision_with_list(city.barbarian, city.ground_list)
 
-            german_german = arcade.check_for_collision_with_list(barbarian, city.german_list)
+            german_german = arcade.check_for_collision_with_list(city.barbarian, city.german_list)
 
             if len(german_hit_list) == 0 and len(german_german) == 0:
                 barbarian_successful = True
 
-        city.german_list.append(barbarian)
+        city.german_list.append(city.barbarian)
     city.background = arcade.load_texture("genoa.png")
     """Gabriele, Amanda. How to eat your way through Genoa, Italy - and see
     some sights along the way. Travel and Leisure, 19 Jan 2020, 
@@ -146,31 +146,32 @@ def city_four():
     city = City()
     city.ground_list = arcade.SpriteList()
     city.german_list = arcade.SpriteList()
-
     for x in range(0, SCREEN_WIDTH, 32):
+
         floor = arcade.Sprite("stoneCenter.png", SPRITE_SCALING)
-        floor.center_x = SCREEN_WIDTH - 16
+        floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
 
+
     germans = random.randrange(1, 5)
     for german in range(germans):
-        barbarian = German("german.png", SPRITE_SCALING)
+        city.barbarian = German("german.png", SPRITE_SCALING)
         barbarian_successful = False
 
         while not barbarian_successful:
 
-            barbarian.center_x = random.randrange(SCREEN_WIDTH)
-            barbarian.center_y = 32
+            city.barbarian.center_x = random.randrange(SCREEN_WIDTH)
+            city.barbarian.center_y = 32
 
-            german_hit_list = arcade.check_for_collision_with_list(barbarian, city.ground_list)
+            german_hit_list = arcade.check_for_collision_with_list(city.barbarian, city.ground_list)
 
-            german_german = arcade.check_for_collision_with_list(barbarian, city.german_list)
+            german_german = arcade.check_for_collision_with_list(city.barbarian, city.german_list)
 
             if len(german_hit_list) == 0 and len(german_german) == 0:
                 barbarian_successful = True
 
-        city.german_list.append(barbarian)
+        city.german_list.append(city.barbarian)
     city.background = arcade.load_texture("venice.png")
     """Karsten, Matthew. 30 best things to do in Venice (Italy's floating city).
     Expert Vagabond, 24 Nov 2021, https://expertvagabond.com/venice-italy-things-to-do/.
@@ -195,7 +196,7 @@ class RomanGame(arcade.Window):
         self.german_count_three = None
         self.german_count_four = None
         self.german_total = 0
-        self.german_amount = None
+        self.german_amount = 0
 
     def setup(self):
 
@@ -210,26 +211,22 @@ class RomanGame(arcade.Window):
         self.city = city_one()
 
         self.german_count_one = city_one().german_list
-        print("Hi")
         self.german_total += len(self.german_count_one)
-        self.german_amount += len(self.german_count_one)
         self.cities.append(self.city)
 
         self.city = city_two()
         self.german_count_two = city_two().german_list
         self.german_total += len(self.german_count_two)
-        self.german_amount += len(self.german_count_two)
         self.cities.append(self.city)
 
         self.city = city_three()
         self.german_count_three = city_three().german_list
         self.german_total += len(self.german_count_three)
-        self.german_amount += len(self.german_count_three)
+
         self.cities.append(self.city)
 
         self.city = city_four()
         self.german_count_four = city_four().german_list
-        self.german_total += len(self.german_count_four)
         self.german_amount += len(self.german_count_four)
         self.cities.append(self.city)
 
@@ -239,7 +236,7 @@ class RomanGame(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
-        if self.german_amount > 0 and self.caesar_health >= 0:
+        if len(self.city.german_list) > 0 and self.caesar_health >= 0:
             arcade.draw_lrwh_rectangle_textured(0, 0,
                                                 SCREEN_WIDTH, SCREEN_HEIGHT, self.cities[self.current_city].background)
             self.cities[self.current_city].ground_list.draw()
@@ -266,6 +263,7 @@ class RomanGame(arcade.Window):
 
         arcade.draw_text(f"Score: {self.caesar_score}", 400, 50, arcade.csscolor.GOLD)
         arcade.draw_text(f"Current health: {self.caesar_health}", 400, 25, arcade.csscolor.GOLD)
+        arcade.draw_text(f"Germans left: {self.german_amount}", 400, 10, arcade.csscolor.GOLD)
 
     def on_update(self, delta_time: float):
         if self.german_amount > 0 or self.caesar_health >= 0:
@@ -292,6 +290,7 @@ class RomanGame(arcade.Window):
                     if german_ones[i].health <= 0:
                         caesar.remove_from_sprite_lists()
                         self.caesar_score += 1
+                        self.german_amount -= 1
 
             elif self.current_city == 1:
                 for i in range(len(german_twos)):

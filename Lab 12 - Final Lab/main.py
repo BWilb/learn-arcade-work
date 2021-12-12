@@ -308,6 +308,15 @@ def main():
 
     while alive is not False:
         """Main loop that controls program"""
+        if caesar.health <= 0:
+            break
+        elif caesar.thirst >= 20:
+            break
+        elif caesar.hunger >= 25:
+            break
+        elif caesar.energy <= 0:
+            break
+
         print(caesar.caesar_locations[current_country].description)
         if current_country == 7:
             sprite_game.main()
