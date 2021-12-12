@@ -5,8 +5,6 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SPRITE_SCALING = 0.25
 MOVEMENT_SPEED = int(input("\nHow fast would you like to move?: "))
-BULLET_SPEED = 5
-
 
 class German(arcade.Sprite):
     def __init__(self, filename, sprite_scaling):
@@ -22,13 +20,11 @@ class German(arcade.Sprite):
         if self.right > SCREEN_WIDTH:
             self.change_x *= -1
 
-
 class City:
     def __init__(self):
         self.background = None
         self.german_list = None
         self.ground_list = None
-
 
 def city_one():
     city = City()
@@ -40,7 +36,6 @@ def city_one():
         floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
-
 
     germans = random.randrange(1, 5)
     for german in range(germans):
@@ -65,7 +60,6 @@ def city_one():
     https://www.tripsavvy.com/top-neighborhoods-in-naples-5079807. 
     Accessed Dec 12 2021."""
     return city
-
 
 def city_two():
     city = City()
@@ -101,7 +95,6 @@ def city_two():
     https://www.travelpulse.com/destinations/europe/italy/rome.html. Accessed Dec 12 2021. """
 
     return city
-
 
 def city_three():
     city = City()
@@ -141,7 +134,6 @@ def city_three():
 
     return city
 
-
 def city_four():
     city = City()
     city.ground_list = arcade.SpriteList()
@@ -152,7 +144,6 @@ def city_four():
         floor.center_x = SCREEN_WIDTH
         floor.center_y = 16
         city.ground_list.append(floor)
-
 
     germans = random.randrange(1, 5)
     for german in range(germans):
@@ -179,14 +170,13 @@ def city_four():
     """
     return city
 
-
 class RomanGame(arcade.Window):
     def __init__(self):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Rome's final stand")
         self.player_list = arcade.SpriteList()
         self.cities = []
         self.caesar_sprite = None
-        self.caesar_health = 250
+        self.caesar_health = 200
         self.caesar_score = None
         self.physics_engine = None
         self.caesar_score = None
@@ -209,25 +199,19 @@ class RomanGame(arcade.Window):
         self.player_list.append(self.caesar_sprite)
 
         self.city = city_one()
-
         self.german_count_one = city_one().german_list
-        #self.german_total += len(self.german_count_one)
         self.cities.append(self.city)
 
         self.city = city_two()
         self.german_count_two = city_two().german_list
-        #self.german_total += len(self.german_count_two)
         self.cities.append(self.city)
 
         self.city = city_three()
         self.german_count_three = city_three().german_list
-        #self.german_total += len(self.german_count_three)
-
         self.cities.append(self.city)
 
         self.city = city_four()
         self.german_count_four = city_four().german_list
-        #self.german_amount += len(self.german_count_four)
         self.cities.append(self.city)
 
         self.current_city = 0
@@ -284,7 +268,7 @@ class RomanGame(arcade.Window):
             german_threes = self.german_count_three
             german_fours = self.german_count_four
             attack = random.randrange(0, 60)
-            german_attack = random.randrange(0, 25)
+            german_attack = random.randrange(0, 36)
 
             if self.current_city == 0:
                 for i in range(len(german_ones)):
@@ -375,7 +359,6 @@ def main():
     window = RomanGame()
     window.setup()
     arcade.run()
-
 
 if __name__ == "__main__":
     main()
