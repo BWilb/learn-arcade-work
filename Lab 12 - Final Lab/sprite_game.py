@@ -4,7 +4,13 @@ import arcade
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SPRITE_SCALING = 0.25
-MOVEMENT_SPEED = int(input("\nHow fast would you like to move?: "))
+same = False
+while not same:
+    try:
+        MOVEMENT_SPEED = int(input("\nHow fast would you like to move?: "))
+        same = True
+    except:
+        print("You are supposed to input a NUMBER!!!")
 
 class German(arcade.Sprite):
     def __init__(self, filename, sprite_scaling):
