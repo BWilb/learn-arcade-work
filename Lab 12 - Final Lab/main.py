@@ -330,8 +330,8 @@ def main():
                 Since there are Germans everywhere, even in Rome's territory
                 , Caesar is also most likely going to run into some.
                 """
-                caesar.energy -= random.randrange(1, 50)
-                caesar.health -= random.randrange(1, 60)
+                caesar.energy -= random.randrange(1, 10)
+                caesar.health -= random.randrange(1, 10)
                 caesar.hunger += random.randrange(1, 5)
                 caesar.thirst += random.randrange(1, 5)
 
@@ -444,11 +444,12 @@ def main():
                 group. Group of Germans also take some blows.
                 I can't make this a separate module, since i need to return more than one value"""
 
-            germans = random.randrange(len(german_warriors) // 25)
+            germans = random.randrange(len(german_warriors) // 15)
             romans = random.randrange(len(caesar.troop_list) // 25)
             print(f"You encountered a group of angry germans with {germans} members")
-            caesar.health -= random.randrange(germans // 12)
-            caesar.energy -= random.randrange(germans // 12)
+            loss = random.randrange(germans // 20)
+            caesar.health -= loss
+            caesar.energy -= loss
             losses = 0
             german_losses = 0
             for ambush in range(germans):
@@ -456,6 +457,7 @@ def main():
                 if caesar.troop_list[ambush].health <= 0:
                     caesar.troop_list.remove(caesar.troop_list[ambush])
                     caesar.troop_loss += 1
+                    losses += 1
 
             for defense in range(romans):
                 german_warriors[defense].health -= random.randrange(romans)
@@ -464,8 +466,8 @@ def main():
                     german_losses += 1
                     caesar.score_card += 1
 
-            print(f"You lost {200 - caesar.health} health pts")
-            print(f"You lost {100 - caesar.energy} energy pts")
+            print(f"You lost {loss} health pts")
+            print(f"You lost {loss} energy pts")
             print(f"You lost {losses} troops")
             print(f"However you did defeat {german_losses} germans\n")
 
