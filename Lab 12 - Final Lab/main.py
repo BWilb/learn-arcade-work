@@ -152,9 +152,7 @@ def health_conditions(caesar):
 def energy_conditions(caesar):
     """Function determines energy conditions"""
     if caesar.energy <= 50:
-        print("Your energy is low, get some sleep")
-    elif caesar.energy <= 25:
-        print("your energy is very low. SLEEP IS REQUIRED!!!!!\n")
+        print("Your energy is low, sleep is required!!!")
 
 def hunger_thirst_conditions(caesar):
     """Function determines hunger and thirst conditions"""
@@ -440,30 +438,32 @@ def main():
             random_event_soldier(caesar)
         # Function, that adds more soldiers to your armada
 
-        if caesar.total_miles_travelled % 6 == 5 and caesar.total_miles_travelled != 0:
+        if caesar.total_miles_travelled % 2 == 0 and caesar.total_miles_travelled != 0:
             """Creation of random event.
                 Caesar runs into group of Germans and loses heatlh, energy, and troops, due to fighting with 
                 group. Group of Germans also take some blows.
-                I can't make this a separate module, since i need to return more than one value
-            """
+                I can't make this a separate module, since i need to return more than one value"""
+
             germans = random.randrange(len(german_warriors) // 25)
             romans = random.randrange(len(caesar.troop_list) // 25)
             print(f"You encountered a group of angry germans with {germans} members")
-            caesar.health -= random.randrange(germans // 6)
-            caesar.energy -= random.randrange(germans // 6)
+            caesar.health -= random.randrange(germans // 12)
+            caesar.energy -= random.randrange(germans // 12)
             losses = 0
             german_losses = 0
             for ambush in range(germans):
                 caesar.troop_list[ambush].health -= random.randrange(germans)
-                german_warriors[ambush].health -= random.randrange(romans)
                 if caesar.troop_list[ambush].health <= 0:
-                    losses += 1
-                    caesar.troop_loss += 1
                     caesar.troop_list.remove(caesar.troop_list[ambush])
-                if german_warriors[ambush].health <= 0:
+                    caesar.troop_loss += 1
+
+            for defense in range(romans):
+                german_warriors[defense].health -= random.randrange(romans)
+                if german_warriors[defense].health <= 0:
+                    german_warriors.remove(german_warriors[defense])
                     german_losses += 1
                     caesar.score_card += 1
-                    german_warriors.remove(german_warriors[ambush])
+
             print(f"You lost {200 - caesar.health} health pts")
             print(f"You lost {100 - caesar.energy} energy pts")
             print(f"You lost {losses} troops")

@@ -340,7 +340,6 @@ class RomanGame(arcade.Window):
     def on_key_press(self, key: int, modifiers: int):
         if key == arcade.key.RIGHT:
             self.caesar_sprite.change_x = MOVEMENT_SPEED
-            print(self.german_amount)
         elif key == arcade.key.LEFT:
             self.caesar_sprite.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.UP:
